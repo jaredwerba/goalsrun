@@ -7,18 +7,50 @@ export const BIO = `REPLACE: Short 2-3 paragraph bio goes here.
 Write in first person. Hit the milestones — where you train, coach, any
 sponsorships, what makes your running story different.`;
 
-export type Race = {
+export type Marathon = {
+  slug: string;
   name: string;
-  date: string;
-  result: string;
-  link?: string;
+  subtitle?: string;
+  time: string;
+  totalSeconds: number;
 };
 
-export const RACES: Race[] = [
-  { name: "REPLACE: Boston Marathon 2025", date: "Apr 2025", result: "2:XX:XX" },
-  { name: "REPLACE: BAA Half", date: "Oct 2024", result: "1:XX:XX" },
-  { name: "REPLACE: USATF-NE 10k", date: "Jun 2024", result: "XX:XX" },
+function hms(h: number, m: number, s = 0) {
+  return h * 3600 + m * 60 + s;
+}
+
+export const MARATHONS: Marathon[] = [
+  {
+    slug: "half-marathon-boston",
+    name: "Half Marathon",
+    subtitle: "Castle Island, Boston",
+    time: "1:16",
+    totalSeconds: hms(1, 16),
+  },
+  {
+    slug: "chicago-marathon",
+    name: "Chicago Marathon",
+    subtitle: "Chicago, IL",
+    time: "2:52",
+    totalSeconds: hms(2, 52),
+  },
+  {
+    slug: "boston-marathon",
+    name: "Boston Marathon",
+    subtitle: "Hopkinton → Boylston St",
+    time: "2:54",
+    totalSeconds: hms(2, 54),
+  },
+  {
+    slug: "berlin-marathon",
+    name: "Berlin Marathon",
+    subtitle: "Berlin, DE",
+    time: "2:48",
+    totalSeconds: hms(2, 48),
+  },
 ];
+
+export const VO2_MAX = 62;
 
 export const SOCIAL = {
   instagram: "https://instagram.com/REPLACE",
