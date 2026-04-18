@@ -63,3 +63,19 @@ export const PRESS_EMAIL = "press@REPLACE.com";
 export const BOOKING_LOCATION = "Castle Island, South Boston";
 export const BOOKING_BLURB =
   "Join me for a 1:1 loop around Castle Island. Easy pace, good conversation.";
+
+export type SessionType = { name: string; desc: string };
+export const SESSION_TYPES: SessionType[] = [
+  {
+    name: "Norwegian 4×400s",
+    desc: "Double-threshold intervals. Controlled lactate, repeatable, race-specific.",
+  },
+  {
+    name: "Lactate threshold runs",
+    desc: "Sustained tempo work at the edge of comfort. Builds the engine that holds marathon pace.",
+  },
+  {
+    name: "Running economy",
+    desc: "Form, cadence, and mechanics on the move. Less wasted motion, more free speed.",
+  },
+];
