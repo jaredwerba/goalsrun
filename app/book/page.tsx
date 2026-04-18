@@ -1,7 +1,10 @@
+import { headers } from "next/headers";
 import { and, eq, gt, asc } from "drizzle-orm";
+import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { slots } from "@/lib/db/schema";
 import { SlotGrid } from "@/components/schedule/slot-grid";
+import { SignupGate } from "@/components/schedule/signup-gate";
 import { Badge } from "@/components/ui/badge";
 import {
   BOOKING_LOCATION,
@@ -31,7 +34,9 @@ async function getOpenSlots() {
 }
 
 export default async function BookPage() {
-  const openSlots = await getOpenSlots();
+  const session = await auth.api.getSession({ headers: await headers() });
+  const isSignedIn = !!session?.user;
+  const openSlots = isSignedIn ? await getOpenSlots() : [];
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 space-y-16">
@@ -105,14 +110,14 @@ export default async function BookPage() {
       <section>
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="text-3xl font-semibold tracking-tight">
-            Pick a slot
+            {isSignedIn ? "Pick a slot" : "See the schedule"}
           </h2>
           <p className="text-sm text-muted-foreground">
-            Passkey sign‑in · Boston time
+            {isSignedIn ? "Boston time" : "Passkey · no passwords"}
           </p>
         </div>
         <div className="mt-8">
-          <SlotGrid openSlots={openSlots} />
+          {isSignedIn ? <SlotGrid openSlots={openSlots} /> : <SignupGate />}
         </div>
       </section>
     </div>
