@@ -1,4 +1,8 @@
+import "dotenv/config";
+import { config as loadEnv } from "dotenv";
 import type { Config } from "drizzle-kit";
+
+loadEnv({ path: ".env.local", override: false });
 
 const url =
   process.env.DATABASE_URL_UNPOOLED ||
