@@ -1,53 +1,14 @@
-import Image from "next/image";
-import fs from "node:fs";
-import path from "node:path";
 import { MARATHONS, type Marathon } from "@/lib/content";
+import { ROUTES } from "@/lib/routes";
 import { CountUpTime } from "./count-up";
-
-function hasRouteImage(slug: string): string | null {
-  const exts = ["jpg", "jpeg", "png", "webp", "avif"];
-  for (const ext of exts) {
-    const rel = `images/routes/${slug}.${ext}`;
-    if (fs.existsSync(path.join(process.cwd(), "public", rel))) {
-      return `/${rel}`;
-    }
-  }
-  return null;
-}
-
-function initials(m: Marathon): string {
-  return m.name
-    .replace(/marathon/i, "")
-    .split(/\s+/)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2) || "GL";
-}
+import { RouteMap } from "./route-map";
 
 function MarathonCard({ m }: { m: Marathon }) {
-  const src = hasRouteImage(m.slug);
+  const route = ROUTES[m.slug];
   return (
     <article className="group rounded-xl border overflow-hidden bg-card transition-shadow hover:shadow-lg">
-      <div className="relative aspect-[16/9] bg-muted overflow-hidden">
-        {src ? (
-          <Image
-            src={src}
-            alt={`${m.name} route`}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,theme(colors.neutral.300)_0%,theme(colors.neutral.100)_60%)] dark:bg-[radial-gradient(circle_at_30%_20%,theme(colors.neutral.700)_0%,theme(colors.neutral.900)_60%)]">
-            <span className="text-6xl font-semibold tracking-tight text-foreground/30 font-mono">
-              {initials(m)}
-            </span>
-            <span className="absolute bottom-3 left-0 right-0 text-center text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              drop {m.slug}.jpg in /public/images/routes/
-            </span>
-          </div>
-        )}
+      <div className="relative aspect-[16/9] overflow-hidden">
+        {route && <RouteMap route={route} slug={m.slug} />}
       </div>
       <div className="p-5">
         <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
