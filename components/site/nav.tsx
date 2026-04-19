@@ -7,7 +7,7 @@ export function Nav() {
       <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
         <Link
           href="/"
-          className="font-semibold tracking-tight text-lg hover:opacity-80"
+          className="font-[family-name:var(--font-display)] tracking-wide text-2xl hover:opacity-80"
         >
           {RUNNER_NAME}
         </Link>
