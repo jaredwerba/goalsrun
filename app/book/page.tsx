@@ -3,7 +3,7 @@ import { and, eq, gt, asc } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { slots } from "@/lib/db/schema";
-import { SlotGrid } from "@/components/schedule/slot-grid";
+import { SlotCalendar } from "@/components/schedule/slot-calendar";
 import { SignupGate } from "@/components/schedule/signup-gate";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -117,7 +117,11 @@ export default async function BookPage() {
           </p>
         </div>
         <div className="mt-8">
-          {isSignedIn ? <SlotGrid openSlots={openSlots} /> : <SignupGate />}
+          {isSignedIn ? (
+            <SlotCalendar openSlots={openSlots} />
+          ) : (
+            <SignupGate />
+          )}
         </div>
       </section>
     </div>
