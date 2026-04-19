@@ -4,7 +4,14 @@ import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
-import { RUNNER_NAME, TAGLINE } from "@/lib/content";
+import {
+  AGE,
+  AUDIENCE,
+  MARATHONS,
+  PHYSIOLOGY,
+  RUNNER_NAME,
+  TAGLINE,
+} from "@/lib/content";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
@@ -34,6 +41,26 @@ export const metadata: Metadata = {
   },
 };
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: RUNNER_NAME,
+  jobTitle: "Distance Runner & Running Coach",
+  description: `${PHYSIOLOGY.marathonPR} marathoner, ${AGE}. VO2 max ${PHYSIOLOGY.vo2Max}. ${TAGLINE}`,
+  url: `https://${host}`,
+  image: `https://${host}/opengraph-image`,
+  sameAs: [AUDIENCE.instagram.url, AUDIENCE.strava.url].filter(
+    (u) => u && !u.includes("REPLACE"),
+  ),
+  knowsAbout: [
+    "Marathon running",
+    "Running mechanics",
+    "Masters athletics",
+    "Running coaching",
+  ],
+  award: MARATHONS.map((m) => `${m.name} — ${m.time}`),
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -43,6 +70,10 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} ${graduate.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

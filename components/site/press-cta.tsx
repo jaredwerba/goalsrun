@@ -1,21 +1,24 @@
-import { PRESS_EMAIL, RUNNER_FIRST_NAME } from "@/lib/content";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { RUNNER_FIRST_NAME } from "@/lib/content";
 
 export function PressCta() {
   return (
     <section id="press" className="mx-auto max-w-5xl px-6 py-16 border-t">
-      <h2 className="text-3xl font-semibold tracking-tight mb-4">
-        Brand partnerships & press
-      </h2>
-      <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-        For sponsorships, interviews, appearances, or collaborations —{" "}
-        {RUNNER_FIRST_NAME} responds personally.
+      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+        For brands
       </p>
-      <a
-        href={`mailto:${PRESS_EMAIL}`}
-        className="mt-6 inline-block font-mono text-lg underline underline-offset-4 hover:opacity-80"
-      >
-        {PRESS_EMAIL}
-      </a>
+      <h2 className="mt-2 text-3xl font-semibold tracking-tight">
+        Partner with {RUNNER_FIRST_NAME}.
+      </h2>
+      <p className="mt-4 text-lg text-muted-foreground max-w-2xl leading-relaxed">
+        Masters-elite audience, detailed gear reviews, race-day content, and
+        coaching tie-ins. Pitch directly — {RUNNER_FIRST_NAME} responds
+        personally.
+      </p>
+      <Button asChild size="lg" className="mt-6">
+        <Link href="/partners">See the media kit</Link>
+      </Button>
     </section>
   );
 }
