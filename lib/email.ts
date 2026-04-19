@@ -3,7 +3,7 @@ import { buildIcs } from "./ics";
 import { PARTNERSHIPS_EMAIL, RUNNER_NAME } from "./content";
 
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "Goals Lopes <bookings@jwerba.com>";
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "jwerba@gmail.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "gersonlopes7@gmail.com";
 const PARTNER_TO_EMAIL = PARTNERSHIPS_EMAIL ?? ADMIN_EMAIL;
 
 const resend = process.env.RESEND_API_KEY
