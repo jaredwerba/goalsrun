@@ -8,7 +8,7 @@ export function Hero() {
     <section className="relative isolate overflow-hidden -mt-[65px]">
       <HeroBackdrop />
 
-      <div className="mx-auto max-w-5xl px-6 min-h-[88vh] flex flex-col justify-end pt-32 pb-20 text-white">
+      <div className="mx-auto max-w-5xl px-6 min-h-screen flex flex-col justify-end pt-32 pb-20 text-white">
         <p className="text-sm uppercase tracking-[0.25em] text-white/80 mb-5">
           Boston, MA
         </p>

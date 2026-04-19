@@ -24,7 +24,8 @@ export function HeroBackdrop() {
   }, []);
 
   const blur = Math.min(20, scrollY / 28);
-  const scale = 1.05 + Math.min(0.06, scrollY / 8000);
+  const scale = 1.2 + Math.min(0.06, scrollY / 8000);
+  const translateY = scrollY * 0.35;
 
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -32,7 +33,7 @@ export function HeroBackdrop() {
         className="absolute inset-0 will-change-[filter,transform]"
         style={{
           filter: `blur(${blur}px)`,
-          transform: `scale(${scale})`,
+          transform: `translate3d(0, ${translateY}px, 0) scale(${scale})`,
         }}
       >
         <Image
