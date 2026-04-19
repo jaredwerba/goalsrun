@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+const BLUR_MASK =
+  "linear-gradient(to bottom, black 0%, black 35%, transparent 80%)";
+
 export function HeroBackdrop() {
   const [scrollY, setScrollY] = useState(0);
   const raf = useRef<number | null>(null);
@@ -27,21 +30,23 @@ export function HeroBackdrop() {
 
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
+      <Image
+        src="/images/hero.jpeg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+      />
       <div
-        className="absolute inset-0 will-change-[filter]"
+        className="absolute inset-0 will-change-[backdrop-filter]"
         style={{
-          filter: `blur(${blur}px)`,
+          backdropFilter: `blur(${blur}px)`,
+          WebkitBackdropFilter: `blur(${blur}px)`,
+          maskImage: BLUR_MASK,
+          WebkitMaskImage: BLUR_MASK,
         }}
-      >
-        <Image
-          src="/images/hero.jpeg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-      </div>
+      />
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/80" />
     </div>
   );
