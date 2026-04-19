@@ -1,22 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { RUNNER_NAME, TAGLINE } from "@/lib/content";
+import { HeroBackdrop } from "./hero-backdrop";
 
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="/images/hero.jpeg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/80" />
-      </div>
+      <HeroBackdrop />
 
       <div className="mx-auto max-w-5xl px-6 min-h-[88vh] flex flex-col justify-end pt-32 pb-20 text-white">
         <p className="text-sm uppercase tracking-[0.25em] text-white/80 mb-5">

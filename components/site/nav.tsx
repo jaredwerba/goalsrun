@@ -3,7 +3,7 @@ import { RUNNER_NAME } from "@/lib/content";
 
 export function Nav() {
   return (
-    <header className="border-b border-border">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-background/40 backdrop-blur-md supports-[backdrop-filter]:bg-background/40">
       <div className="mx-auto max-w-5xl px-6 py-4 flex items-center justify-between">
         <Link
           href="/"
