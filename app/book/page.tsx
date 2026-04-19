@@ -113,7 +113,7 @@ export default async function BookPage() {
             {isSignedIn ? "Pick a slot" : "See the schedule"}
           </h2>
           <p className="text-sm text-muted-foreground">
-            {isSignedIn ? "Boston time" : "Passkey · no passwords"}
+            {isSignedIn ? "Boston time" : "No passwords · ten seconds"}
           </p>
         </div>
         <div className="mt-8">

@@ -41,7 +41,7 @@ export function SignupGate() {
       if (pk && "error" in pk && pk.error) {
         toast.error(
           pk.error.message ||
-            "Passkey registration failed. You can still book, but future sign-ins will need a reset.",
+            "Account secured, but you may need help signing in later.",
         );
       } else {
         toast.success("Account ready. Pick a slot below.");
@@ -57,7 +57,7 @@ export function SignupGate() {
     try {
       const res = await authClient.signIn.passkey();
       if (res?.error) {
-        toast.error(res.error.message || "Passkey sign-in failed.");
+        toast.error(res.error.message || "Sign-in failed.");
         return;
       }
       router.refresh();
@@ -75,8 +75,7 @@ export function SignupGate() {
         Create an account to see open slots
       </h3>
       <p className="mt-2 text-sm text-muted-foreground max-w-prose">
-        Passkey-based — no passwords. Takes ten seconds. Your first run with
-        Goals is free.
+        No passwords. Takes ten seconds. Your first run with Goals is free.
       </p>
 
       <form onSubmit={createAccount} className="mt-6 space-y-4 max-w-md">
@@ -102,7 +101,7 @@ export function SignupGate() {
           />
         </div>
         <Button type="submit" disabled={busy} className="w-full sm:w-auto">
-          Create account with passkey
+          Create account
         </Button>
       </form>
 
@@ -114,7 +113,7 @@ export function SignupGate() {
           disabled={busy}
           className="underline underline-offset-4 hover:text-foreground disabled:opacity-50"
         >
-          Sign in with passkey
+          Sign in
         </button>
       </p>
     </div>
