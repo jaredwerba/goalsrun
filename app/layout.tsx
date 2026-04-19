@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Bebas_Neue } from "next/font/google";
+import { Inter, Geist_Mono, Graduate } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Nav } from "@/components/site/nav";
@@ -7,12 +7,12 @@ import { Footer } from "@/components/site/footer";
 import { RUNNER_NAME, TAGLINE } from "@/lib/content";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
+const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-const bebas = Bebas_Neue({
+const graduate = Graduate({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${bebas.variable} h-full antialiased`}
+      className={`${inter.variable} ${geistMono.variable} ${graduate.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Nav />
