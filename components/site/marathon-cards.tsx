@@ -6,16 +6,18 @@ import { RouteMap } from "./route-map";
 function MarathonCard({ m }: { m: Marathon }) {
   const route = ROUTES[m.slug];
   return (
-    <article className="group rounded-xl border overflow-hidden bg-card transition-shadow hover:shadow-lg">
+    <article className="group rounded-xl border border-white/10 overflow-hidden bg-neutral-950">
       <div className="relative aspect-[16/9] overflow-hidden">
         {route && <RouteMap route={route} slug={m.slug} />}
       </div>
       <div className="p-5">
-        <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+        <p className="text-xs uppercase tracking-[0.18em] text-white/60">
           {m.subtitle ?? m.name}
         </p>
-        <h3 className="mt-1 text-xl font-semibold tracking-tight">{m.name}</h3>
-        <p className="mt-3 font-mono text-5xl font-semibold tabular-nums leading-none">
+        <h3 className="mt-1 text-xl font-semibold tracking-tight text-white">
+          {m.name}
+        </h3>
+        <p className="mt-3 font-mono text-5xl font-semibold tabular-nums leading-none text-white">
           <CountUpTime targetSeconds={m.totalSeconds} />
         </p>
       </div>
@@ -31,7 +33,7 @@ export function MarathonCards() {
           Personal bests
         </h2>
         <p className="text-white/60 mb-8">
-          Chip times. Hover for the route.
+          Chip times. Routes to scale.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {MARATHONS.map((m) => (

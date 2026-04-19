@@ -16,7 +16,7 @@ export function PressCta() {
         coaching tie-ins. Pitch directly — {RUNNER_FIRST_NAME} responds
         personally.
       </p>
-      <Button asChild size="lg" className="mt-6">
+      <Button asChild size="lg" className="mt-6 h-12 px-6 text-base">
         <Link href="/partners">See the media kit</Link>
       </Button>
     </section>

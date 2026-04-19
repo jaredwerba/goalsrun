@@ -13,7 +13,7 @@ export function Footer() {
             <Link
               href={SOCIAL.instagram}
               target="_blank"
-              className="hover:underline underline-offset-4"
+              className="inline-flex items-center h-11 hover:underline underline-offset-4"
             >
               Instagram
             </Link>
@@ -22,12 +22,12 @@ export function Footer() {
             <Link
               href={SOCIAL.strava}
               target="_blank"
-              className="hover:underline underline-offset-4"
+              className="inline-flex items-center h-11 hover:underline underline-offset-4"
             >
               Strava
             </Link>
           )}
-          <Link href="/bookings" className="hover:underline underline-offset-4">
+          <Link href="/bookings" className="inline-flex items-center h-11 hover:underline underline-offset-4">
             My bookings
           </Link>
         </div>
