@@ -5,7 +5,7 @@ import { HeroBackdrop } from "./hero-backdrop";
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden">
+    <section className="relative isolate overflow-hidden -mt-[65px]">
       <HeroBackdrop />
 
       <div className="mx-auto max-w-5xl px-6 min-h-[88vh] flex flex-col justify-end pt-32 pb-20 text-white">

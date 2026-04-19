@@ -8,6 +8,7 @@ function listImages(): string[] {
     return fs
       .readdirSync(dir)
       .filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f))
+      .filter((f) => f !== "hero.jpeg")
       .sort()
       .map((f) => `/images/${f}`);
   } catch {
