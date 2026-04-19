@@ -25,20 +25,19 @@ function MarathonCard({ m }: { m: Marathon }) {
 
 export function MarathonCards() {
   return (
-    <section
-      id="results"
-      className="mx-auto max-w-5xl px-6 py-16 border-t"
-    >
-      <h2 className="text-3xl font-semibold tracking-tight mb-2">
-        Personal bests
-      </h2>
-      <p className="text-muted-foreground mb-8">
-        Chip times. Hover for the route.
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {MARATHONS.map((m) => (
-          <MarathonCard key={m.slug} m={m} />
-        ))}
+    <section id="results" className="bg-black text-white">
+      <div className="mx-auto max-w-5xl px-6 py-20">
+        <h2 className="text-3xl font-semibold tracking-tight mb-2">
+          Personal bests
+        </h2>
+        <p className="text-white/60 mb-8">
+          Chip times. Hover for the route.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {MARATHONS.map((m) => (
+            <MarathonCard key={m.slug} m={m} />
+          ))}
+        </div>
       </div>
     </section>
   );
