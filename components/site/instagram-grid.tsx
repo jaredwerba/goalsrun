@@ -21,9 +21,18 @@ type FeaturedPost = {
 // Edit this list to curate which posts appear on /partners. Leave empty
 // to hide the whole section (graceful no-op).
 const FEATURED_POSTS: FeaturedPost[] = [
-  // { url: "https://www.instagram.com/p/XXXXXXXXXXX/", alt: "Boston 2026 finish line" },
-  // { url: "https://www.instagram.com/p/XXXXXXXXXXX/", alt: "Castle Island long run" },
-  // { url: "https://www.instagram.com/reel/XXXXXXXXXXX/", alt: "Tuesday intervals" },
+  {
+    url: "https://www.instagram.com/p/DVHJ8p4ksK6/",
+    alt: "Goals Lopes on Instagram",
+  },
+  {
+    url: "https://www.instagram.com/p/DP9NhJJjty2/",
+    alt: "Goals Lopes on Instagram",
+  },
+  {
+    url: "https://www.instagram.com/p/DNlRofSOoBK/",
+    alt: "Goals Lopes on Instagram",
+  },
 ];
 
 // Normalize a post URL into Instagram's embed URL.
