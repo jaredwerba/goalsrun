@@ -127,7 +127,8 @@ export const SOCIAL = {
   twitter: "",
 };
 
-export const PRESS_EMAIL = "press@REPLACE.com";
+export const PRESS_EMAIL =
+  process.env.PRESS_EMAIL ?? "gersonlopes7@gmail.com";
 export const PARTNERSHIPS_EMAIL =
   process.env.PARTNERSHIPS_EMAIL ?? "gersonlopes7@gmail.com";
 
