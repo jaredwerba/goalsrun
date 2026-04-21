@@ -66,9 +66,9 @@ export default async function BookPage() {
           <dt className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
             Who
           </dt>
-          <dd className="mt-2 text-lg font-medium">Elite marathoner</dd>
+          <dd className="mt-2 text-lg font-medium">Masters marathoner</dd>
           <dd className="text-sm text-muted-foreground">
-            Sub‑2:50 across Chicago, Boston, Berlin.
+            2:42 at Boston 2026. Sub‑2:50 across Berlin &amp; Chicago.
           </dd>
         </div>
         <div>
