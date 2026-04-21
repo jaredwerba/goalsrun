@@ -52,10 +52,10 @@ export const MARATHONS: Marathon[] = [
   },
 ];
 
-export const VO2_MAX = 62;
+export const VO2_MAX = 68;
 
 export const PHYSIOLOGY = {
-  vo2Max: 62,
+  vo2Max: 68,
   restingHR: 42,
   weeklyMileage: 90,
   yearsRunning: 15,

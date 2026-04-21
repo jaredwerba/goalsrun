@@ -10,8 +10,8 @@ export function Bio() {
       <div className="grid md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-start">
         <div className="relative aspect-[3/4] w-full max-w-[320px] md:max-w-none overflow-hidden rounded-xl bg-muted">
           <Image
-            src="/images/photo_090.jpg"
-            alt={`${RUNNER_NAME} with marathon finisher medals`}
+            src="/images/IMG_2049.JPG"
+            alt={`${RUNNER_NAME} mid-run, smiling`}
             fill
             sizes="(max-width: 768px) 100vw, 280px"
             className="object-cover"

@@ -68,6 +68,9 @@ export default function PartnersPage() {
           <a href="#audience" className="hover:underline underline-offset-4">
             Audience
           </a>
+          <a href="#oncourse" className="hover:underline underline-offset-4">
+            On course
+          </a>
           <a href="#stack" className="hover:underline underline-offset-4">
             Stack
           </a>
@@ -82,9 +85,18 @@ export default function PartnersPage() {
 
       <div className="grid grid-cols-3 gap-2 sm:gap-3 -mt-8">
         {[
-          { src: "/images/photo_061.jpg", alt: `${RUNNER_NAME} running at dusk` },
-          { src: "/images/photo_085.jpg", alt: `${RUNNER_NAME} on course at the Boston Marathon` },
-          { src: "/images/photo_068.jpg", alt: `${RUNNER_NAME} trackside portrait` },
+          {
+            src: "/images/IMG_6906.jpeg",
+            alt: `${RUNNER_NAME} racing the Berlin Marathon`,
+          },
+          {
+            src: "/images/IMG_2590.JPG",
+            alt: `${RUNNER_NAME} crossing the Boston Marathon finish line`,
+          },
+          {
+            src: "/images/IMG_2054.JPG",
+            alt: `${RUNNER_NAME} mid-stride on a training run`,
+          },
         ].map((p) => (
           <div
             key={p.src}
@@ -211,6 +223,62 @@ export default function PartnersPage() {
               Castle Island regular. B.A.A. network.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section id="oncourse" className="space-y-6">
+        <div className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+            On course
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight">
+            Race-ready, every weekend.
+          </h2>
+          <p className="text-muted-foreground max-w-prose">
+            Training and racing footage from the last 18 months — Boston,
+            Berlin, Chicago, the locals.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          {[
+            {
+              src: "/images/IMG_2049.JPG",
+              alt: `${RUNNER_NAME} training in winter kit`,
+            },
+            {
+              src: "/images/IMG_2076.JPG",
+              alt: `${RUNNER_NAME} in profile mid-stride`,
+            },
+            {
+              src: "/images/IMG_2495.jpeg",
+              alt: `${RUNNER_NAME} pre-race at the Boston Marathon`,
+            },
+            {
+              src: "/images/IMG_4430.jpeg",
+              alt: `${RUNNER_NAME} with an age-group award`,
+            },
+            {
+              src: "/images/IMG_6897.JPG",
+              alt: `${RUNNER_NAME} approaching the Victory Column in Berlin`,
+            },
+            {
+              src: "/images/IMG_7211.jpeg",
+              alt: `${RUNNER_NAME} at the Newport Marathon`,
+            },
+          ].map((p) => (
+            <div
+              key={p.src}
+              className="relative aspect-[3/4] overflow-hidden rounded-lg bg-muted"
+            >
+              <Image
+                src={p.src}
+                alt={p.alt}
+                fill
+                sizes="(max-width: 640px) 50vw, 33vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
       </section>
 
