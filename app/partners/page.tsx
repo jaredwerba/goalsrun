@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Stack } from "@/components/site/stack";
 import { PartnerContactForm } from "@/components/partners/contact-form";
@@ -78,6 +79,27 @@ export default function PartnersPage() {
           </a>
         </nav>
       </header>
+
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 -mt-8">
+        {[
+          { src: "/images/photo_061.jpg", alt: `${RUNNER_NAME} running at dusk` },
+          { src: "/images/photo_085.jpg", alt: `${RUNNER_NAME} on course at the Boston Marathon` },
+          { src: "/images/photo_068.jpg", alt: `${RUNNER_NAME} trackside portrait` },
+        ].map((p) => (
+          <div
+            key={p.src}
+            className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted"
+          >
+            <Image
+              src={p.src}
+              alt={p.alt}
+              fill
+              sizes="(max-width: 768px) 33vw, 240px"
+              className="object-cover"
+            />
+          </div>
+        ))}
+      </div>
 
       <section id="pitch" className="space-y-5">
         <h2 className="text-xs uppercase tracking-[0.22em] text-muted-foreground">

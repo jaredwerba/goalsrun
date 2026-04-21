@@ -2,13 +2,19 @@ import Image from "next/image";
 import fs from "node:fs";
 import path from "node:path";
 
+// Files that exist in /public/images but shouldn't appear in the gallery.
+// - hero.jpeg: used as the hero backdrop
+// - photo_080.jpg: has burned-in social-media caption, clashes with editorial tone
+// - photo_090.jpg: dedicated portrait for the Bio section
+const EXCLUDE = new Set(["hero.jpeg", "photo_080.jpg", "photo_090.jpg"]);
+
 function listImages(): string[] {
   const dir = path.join(process.cwd(), "public", "images");
   try {
     return fs
       .readdirSync(dir)
       .filter((f) => /\.(jpe?g|png|webp|avif)$/i.test(f))
-      .filter((f) => f !== "hero.jpeg")
+      .filter((f) => !EXCLUDE.has(f))
       .sort()
       .map((f) => `/images/${f}`);
   } catch {
@@ -26,7 +32,7 @@ export function Gallery() {
         {images.map((src) => (
           <div
             key={src}
-            className="relative aspect-square overflow-hidden rounded-lg bg-muted"
+            className="relative aspect-[3/4] overflow-hidden rounded-lg bg-muted"
           >
             <Image
               src={src}
