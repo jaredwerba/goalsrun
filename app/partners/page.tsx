@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Stack } from "@/components/site/stack";
 import { StravaProof } from "@/components/site/strava-proof";
+import { InstagramGrid } from "@/components/site/instagram-grid";
 import { PartnerContactForm } from "@/components/partners/contact-form";
 import { BRAND_PITCHES } from "@/lib/brand-pitches";
 import { hasStravaCredentials } from "@/lib/strava";
@@ -234,6 +235,8 @@ export default function PartnersPage() {
       </section>
 
       <StravaProof />
+
+      <InstagramGrid />
 
       <section id="oncourse" className="space-y-6">
         <div className="space-y-2">
