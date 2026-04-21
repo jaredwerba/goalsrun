@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,17 @@ export function PartnerContactForm() {
   const [budget, setBudget] = useState<string>("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+
+  // Prefill brand from /partners/[slug] deep links (?brand=Nike etc.).
+  // Using window.location.search directly avoids the Suspense requirement
+  // that useSearchParams() would impose on the parent page. This runs once
+  // client-side after hydration; the field stays empty on SSR.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const prefill = params.get("brand");
+    if (prefill) setBrand(prefill);
+  }, []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

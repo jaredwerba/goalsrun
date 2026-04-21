@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Stack } from "@/components/site/stack";
 import { PartnerContactForm } from "@/components/partners/contact-form";
+import { BRAND_PITCHES } from "@/lib/brand-pitches";
 import {
   AGE,
   AUDIENCE,
@@ -73,6 +74,9 @@ export default function PartnersPage() {
           </a>
           <a href="#stack" className="hover:underline underline-offset-4">
             Stack
+          </a>
+          <a href="#brands" className="hover:underline underline-offset-4">
+            By brand
           </a>
           <a href="#deliver" className="hover:underline underline-offset-4">
             What I deliver
@@ -285,6 +289,54 @@ export default function PartnersPage() {
       <div id="stack">
         <Stack />
       </div>
+
+      <section id="brands" className="space-y-6">
+        <div className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+            By brand
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tight">
+            A specific pitch, written for you.
+          </h2>
+          <p className="text-muted-foreground max-w-prose">
+            Ten brands I'd work with tomorrow. Each page is a written pitch —
+            why the brand, why me, why now, and why this should be the first
+            partnership for both of us.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {BRAND_PITCHES.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/partners/${p.slug}`}
+              className="group relative overflow-hidden rounded-xl border bg-card hover:bg-muted/40 transition-colors"
+            >
+              <div className="flex items-stretch">
+                <div className="relative w-28 shrink-0 bg-muted">
+                  <Image
+                    src={p.heroImage.src}
+                    alt=""
+                    fill
+                    sizes="112px"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex-1 p-4 space-y-2">
+                  <p className="text-lg font-semibold tracking-tight">
+                    {p.brand}
+                  </p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {p.tagline}
+                  </p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground/80 group-hover:text-foreground transition-colors">
+                    Read the pitch →
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <section id="deliver" className="space-y-6">
         <h2 className="text-3xl font-semibold tracking-tight">

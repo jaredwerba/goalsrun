@@ -19,10 +19,10 @@ export function Nav() {
             Results
           </Link>
           <Link
-            href="/#press"
+            href="/partners"
             className="inline-flex items-center h-11 px-2 sm:px-3 hover:underline underline-offset-4"
           >
-            Press
+            Partners
           </Link>
         </nav>
         <div className="flex-1 flex justify-end">

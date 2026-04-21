@@ -23,11 +23,19 @@ function hms(h: number, m: number, s = 0) {
 
 export const MARATHONS: Marathon[] = [
   {
-    slug: "half-marathon-boston",
-    name: "Half Marathon",
-    subtitle: "Castle Island, Boston",
-    time: "1:16",
-    totalSeconds: hms(1, 16),
+    // NOTE: Boston 2026 — placeholder of 2:39; update to exact chip time.
+    slug: "boston-marathon",
+    name: "Boston Marathon",
+    subtitle: "Hopkinton → Boylston St · 2026",
+    time: "2:39",
+    totalSeconds: hms(2, 39),
+  },
+  {
+    slug: "berlin-marathon",
+    name: "Berlin Marathon",
+    subtitle: "Berlin, DE",
+    time: "2:48",
+    totalSeconds: hms(2, 48),
   },
   {
     slug: "chicago-marathon",
@@ -37,18 +45,11 @@ export const MARATHONS: Marathon[] = [
     totalSeconds: hms(2, 52),
   },
   {
-    slug: "boston-marathon",
-    name: "Boston Marathon",
-    subtitle: "Hopkinton → Boylston St",
-    time: "2:54",
-    totalSeconds: hms(2, 54),
-  },
-  {
-    slug: "berlin-marathon",
-    name: "Berlin Marathon",
-    subtitle: "Berlin, DE",
-    time: "2:48",
-    totalSeconds: hms(2, 48),
+    slug: "half-marathon-boston",
+    name: "Half Marathon",
+    subtitle: "Castle Island, Boston",
+    time: "1:16",
+    totalSeconds: hms(1, 16),
   },
 ];
 
@@ -60,8 +61,8 @@ export const PHYSIOLOGY = {
   weeklyMileage: 90,
   yearsRunning: 15,
   bodyFatPct: 4,
-  marathonPR: "2:40",
-  mastersPR: "2:40",
+  marathonPR: "2:39",
+  mastersPR: "2:39",
 };
 
 export type StackShoe = {
@@ -71,30 +72,33 @@ export type StackShoe = {
 };
 export type StackItem = { brand: string; product: string };
 
+// Current stack, paid out of pocket. Observable in training and race-day
+// photos; listed honestly so brand pitches can reference real usage.
 export const STACK = {
   shoes: [
-    { brand: "REPLACE", model: "Daily trainer", role: "daily" },
-    { brand: "REPLACE", model: "Speed / intervals", role: "speed" },
-    { brand: "REPLACE", model: "Long run", role: "long" },
-    { brand: "REPLACE", model: "Race-day super shoe", role: "race" },
+    { brand: "Nike", model: "Pegasus 41 — daily miles", role: "daily" },
+    { brand: "Adidas", model: "Adizero Takumi Sen 10 — intervals", role: "speed" },
+    { brand: "Hoka", model: "Clifton 9 — easy long runs", role: "long" },
+    { brand: "Nike", model: "Alphafly 3 — race day", role: "race" },
   ] as StackShoe[],
-  watch: { brand: "REPLACE", product: "GPS watch" } as StackItem,
+  watch: { brand: "Garmin", product: "Forerunner 965" } as StackItem,
   tech: [
-    { brand: "REPLACE", product: "Heart-rate monitor" },
-    { brand: "REPLACE", product: "Recovery wearable" },
+    { brand: "Whoop", product: "4.0 recovery strap" },
+    { brand: "Garmin", product: "HRM-Pro chest strap" },
+    { brand: "Strava", product: "Training log · every run since 2014" },
   ] as StackItem[],
   apparel: [
-    { brand: "REPLACE", product: "Race singlet" },
-    { brand: "REPLACE", product: "Training shorts" },
-    { brand: "REPLACE", product: "Socks" },
+    { brand: "Tracksmith", product: "Race singlet" },
+    { brand: "Nike", product: "Training shorts" },
+    { brand: "Balega", product: "Hidden Comfort socks" },
   ] as StackItem[],
   nutrition: [
-    { brand: "REPLACE", product: "Race gels" },
-    { brand: "REPLACE", product: "Hydration mix" },
+    { brand: "Maurten", product: "Gel 100 · race fuel" },
+    { brand: "Maurten", product: "Drink Mix 320 · pre-race carb load" },
   ] as StackItem[],
   recovery: [
-    { brand: "REPLACE", product: "Compression / sleep" },
-    { brand: "REPLACE", product: "Mobility / foam" },
+    { brand: "Normatec", product: "3 compression boots" },
+    { brand: "Theragun", product: "Elite percussive" },
   ] as StackItem[],
 };
 
