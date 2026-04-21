@@ -124,7 +124,7 @@ export const SOCIAL = {
 
 export const PRESS_EMAIL = "press@REPLACE.com";
 export const PARTNERSHIPS_EMAIL =
-  process.env.PARTNERSHIPS_EMAIL ?? "partnerships@REPLACE.com";
+  process.env.PARTNERSHIPS_EMAIL ?? "gersonlopes7@gmail.com";
 
 export const PARTNERS_PITCH = `The running-brand audience is aging up — and most "elite" talent is 25. I'm 43, running 2:40, still getting faster. Masters athletes are the category brands most want to reach and least often sponsor. I make credible, detailed content: gear reviews that read like race reports, workouts that break down why they work, Castle Island footage most weeks of the year.`;
 
