@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Stack } from "@/components/site/stack";
+import { StravaProof } from "@/components/site/strava-proof";
 import { PartnerContactForm } from "@/components/partners/contact-form";
 import { BRAND_PITCHES } from "@/lib/brand-pitches";
+import { hasStravaCredentials } from "@/lib/strava";
 import {
   AGE,
   AUDIENCE,
@@ -40,12 +42,8 @@ function Stat({ label, value, suffix }: { label: string; value: string; suffix?:
   );
 }
 
-function formatFollowers(n: number): string {
-  if (n >= 1000) return `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k`;
-  return String(n);
-}
-
 export default function PartnersPage() {
+  const stravaLive = hasStravaCredentials();
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 space-y-20">
       <header className="space-y-5">
@@ -67,8 +65,13 @@ export default function PartnersPage() {
             Numbers
           </a>
           <a href="#audience" className="hover:underline underline-offset-4">
-            Audience
+            Find me
           </a>
+          {stravaLive && (
+            <a href="#strava" className="hover:underline underline-offset-4">
+              Strava
+            </a>
+          )}
           <a href="#oncourse" className="hover:underline underline-offset-4">
             On course
           </a>
@@ -184,51 +187,53 @@ export default function PartnersPage() {
       </section>
 
       <section id="audience" className="space-y-6">
-        <h2 className="text-3xl font-semibold tracking-tight">Audience</h2>
+        <h2 className="text-3xl font-semibold tracking-tight">Where to find me</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <a
             href={AUDIENCE.instagram.url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl border bg-card p-6 hover:bg-muted/50 transition-colors"
+            className="group rounded-xl border bg-card p-6 hover:bg-muted/50 transition-colors"
           >
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
               Instagram
             </p>
-            <p className="mt-2 text-3xl font-semibold tabular-nums">
-              {formatFollowers(AUDIENCE.instagram.followers)}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-2 text-2xl font-semibold tracking-tight">
               {AUDIENCE.instagram.handle}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+              Training, race-day, Castle Island mornings →
             </p>
           </a>
           <a
             href={AUDIENCE.strava.url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl border bg-card p-6 hover:bg-muted/50 transition-colors"
+            className="group rounded-xl border bg-card p-6 hover:bg-muted/50 transition-colors"
           >
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
               Strava
             </p>
-            <p className="mt-2 text-3xl font-semibold tabular-nums">
-              {formatFollowers(AUDIENCE.strava.followers)}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-2 text-2xl font-semibold tracking-tight">
               {AUDIENCE.strava.handle}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+              Every workout since 2016, public →
             </p>
           </a>
           <div className="rounded-xl border bg-card p-6">
             <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
               Local scene
             </p>
-            <p className="mt-2 text-3xl font-semibold">Boston</p>
+            <p className="mt-2 text-2xl font-semibold tracking-tight">Boston</p>
             <p className="mt-1 text-sm text-muted-foreground">
               Castle Island regular. B.A.A. network.
             </p>
           </div>
         </div>
       </section>
+
+      <StravaProof />
 
       <section id="oncourse" className="space-y-6">
         <div className="space-y-2">

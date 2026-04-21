@@ -106,14 +106,17 @@ export const STACK = {
 
 export const AUDIENCE = {
   instagram: {
-    handle: "@REPLACE",
+    handle: "@goals_zizou",
     followers: 0,
-    url: "https://instagram.com/REPLACE",
+    url: "https://www.instagram.com/goals_zizou",
   },
   strava: {
-    handle: "REPLACE",
+    // Strava athlete ID for Goals Lopes. The API treats this as the
+    // canonical identifier; the public profile URL is derived from it.
+    athleteId: "47881127",
+    handle: "Goals Lopes",
     followers: 0,
-    url: "https://strava.com/athletes/REPLACE",
+    url: "https://www.strava.com/athletes/47881127",
   },
   newsletter: { subscribers: 0, url: "" },
 };
