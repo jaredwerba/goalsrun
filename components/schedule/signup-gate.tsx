@@ -101,7 +101,9 @@ export function SignupGate() {
       const res = await authClient.signIn.magicLink({
         email: email.trim(),
         callbackURL: "/book?recovered=1",
-        errorCallbackURL: "/book?error=magic",
+        // Plugin appends ?error=<CODE> (INVALID_TOKEN / EXPIRED_TOKEN / ...)
+        // on failure — pass the bare path and detect any error= in the banner.
+        errorCallbackURL: "/book",
       });
       if (res?.error) {
         // Don't leak existence — collapse "user not found" into the generic

@@ -43,8 +43,11 @@ export default async function BookPage({
   const isSignedIn = !!session?.user;
   const openSlots = isSignedIn ? await getOpenSlots() : [];
   const params = await searchParams;
+  // better-auth's magic-link plugin redirects to errorCallbackURL with
+  // ?error=<CODE> (INVALID_TOKEN, EXPIRED_TOKEN, ATTEMPTS_EXCEEDED, ...) on
+  // any failure — treat the presence of ?error alone as the signal.
   const recoveryMode =
-    params.error === "magic"
+    typeof params.error === "string" && params.error.length > 0
       ? ("error" as const)
       : params.recovered === "1" && isSignedIn
         ? ("recovered" as const)
