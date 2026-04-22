@@ -10,12 +10,6 @@ import { sendMagicLinkEmail } from "@/lib/email";
 const isProd = process.env.NODE_ENV === "production";
 const prodHost = process.env.NEXT_PUBLIC_SITE_HOST || "goalslopes.run";
 const prodOrigin = `https://${prodHost}`;
-const prodOriginWWW = `https://www.${prodHost}`;
-// Both apex and www resolve to the same Vercel deployment, so anyone landing
-// on www would otherwise fail better-auth's CSRF origin check AND WebAuthn's
-// expectedOrigin. Accept both. rpID stays on the apex — WebAuthn treats www
-// as a same-RP subdomain so passkeys registered either place work on both.
-const prodOrigins = [prodOrigin, prodOriginWWW];
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -30,7 +24,6 @@ export const auth = betterAuth({
   }),
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: isProd ? prodOrigin : "http://localhost:3000",
-  trustedOrigins: isProd ? [prodOriginWWW] : [],
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
@@ -44,7 +37,7 @@ export const auth = betterAuth({
     passkey({
       rpName: "Goals Lopes",
       rpID: isProd ? prodHost : "localhost",
-      origin: isProd ? prodOrigins : "http://localhost:3000",
+      origin: isProd ? prodOrigin : "http://localhost:3000",
     }),
     magicLink({
       // The booking gate is passkey-only. Magic link exists strictly as
