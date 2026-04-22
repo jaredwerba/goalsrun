@@ -54,8 +54,8 @@ export function HeroBackdrop() {
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <video
         ref={videoRef}
-        src="/images/video.mp4"
-        poster="/images/video-poster.jpg"
+        src="/images/videohero2.mp4"
+        poster="/images/videohero2-poster.jpg"
         autoPlay
         muted
         loop

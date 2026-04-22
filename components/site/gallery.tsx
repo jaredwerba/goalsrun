@@ -4,12 +4,12 @@ import path from "node:path";
 
 // Files that exist in /public/images but shouldn't appear in the gallery.
 // - goalshero.png: AI-generated silhouette, decorative; previously the hero
-// - video-poster.jpg: first-frame poster for the hero video, not a photo
+// - videohero2-poster.jpg: first-frame poster for the hero video, not a photo
 // - photo_080.jpg: has burned-in social-media caption, clashes with editorial tone
 // - IMG_2049.JPG: featured as the Bio portrait
 const EXCLUDE = new Set([
   "goalshero.png",
-  "video-poster.jpg",
+  "videohero2-poster.jpg",
   "photo_080.jpg",
   "IMG_2049.JPG",
 ]);
