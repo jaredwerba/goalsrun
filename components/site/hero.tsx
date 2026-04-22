@@ -22,7 +22,7 @@ export function Hero() {
           <Button
             asChild
             size="lg"
-            className="h-12 px-6 text-base bg-white text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.65)]"
+            className="h-12 px-6 text-base bg-white text-black shadow-[0_0_28px_rgba(255,255,255,0.55)] hover:shadow-[0_0_44px_rgba(255,255,255,0.85)]"
           >
             <Link href="/book">Book a Castle Island run</Link>
           </Button>
