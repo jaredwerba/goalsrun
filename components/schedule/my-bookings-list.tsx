@@ -12,6 +12,7 @@ export type BookingRow = {
   endsAt: string;
   location: string;
   notes: string | null;
+  status: "pending" | "accepted";
 };
 
 export function MyBookingsList({ rows }: { rows: BookingRow[] }) {

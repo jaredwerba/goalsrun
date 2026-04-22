@@ -25,6 +25,7 @@ export default async function BookingsPage() {
       endsAt: slots.endsAt,
       location: bookings.location,
       notes: bookings.notes,
+      status: bookings.status,
     })
     .from(bookings)
     .innerJoin(slots, eq(bookings.slotId, slots.id))
@@ -40,6 +41,7 @@ export default async function BookingsPage() {
         endsAt: r.endsAt.toISOString(),
         location: r.location,
         notes: r.notes,
+        status: (r.status ?? "pending") as "pending" | "accepted",
       })),
     );
 

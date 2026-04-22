@@ -76,9 +76,20 @@ export function UserPanel({ userName, userEmail, upcomingRuns, pastRuns }: Props
                 className="flex flex-wrap items-start justify-between gap-3 p-4"
               >
                 <div>
-                  <p className="font-medium">
-                    {formatSlotRange(new Date(r.startsAt), new Date(r.endsAt))}
-                  </p>
+                  <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                    <p className="font-medium">
+                      {formatSlotRange(new Date(r.startsAt), new Date(r.endsAt))}
+                    </p>
+                    {r.status === "pending" ? (
+                      <span className="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">
+                        Pending
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                        Confirmed
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground">{r.location}</p>
                   {r.notes && (
                     <p className="mt-1 text-sm">

@@ -32,9 +32,59 @@ function formatWhen(d: Date): string {
   }).format(d);
 }
 
-export async function sendBookingEmails(p: BookingEmailPayload): Promise<void> {
+/** Sent when a user submits a booking request (status = pending).
+ *  User gets "request received"; admin gets notified to review. */
+export async function sendBookingRequestEmails(p: BookingEmailPayload): Promise<void> {
   if (!resend) {
-    console.warn("[email] RESEND_API_KEY not set; skipping booking emails");
+    console.warn("[email] RESEND_API_KEY not set; skipping request emails");
+    return;
+  }
+
+  const when = formatWhen(p.startsAt);
+
+  const userHtml = `
+    <p>Hi ${p.userName},</p>
+    <p>Your run request for <strong>${when}</strong> at ${p.location} has been received.</p>
+    <p>Goals will review and confirm shortly. You'll get another email once it's accepted.</p>
+    <p>— ${RUNNER_NAME}</p>
+  `;
+
+  const adminHtml = `
+    <p><strong>New run request — pending your review.</strong></p>
+    <ul>
+      <li><strong>Who:</strong> ${p.userName} &lt;${p.userEmail}&gt;</li>
+      <li><strong>When:</strong> ${when}</li>
+      <li><strong>Where:</strong> ${p.location}</li>
+      <li><strong>Notes:</strong> ${p.notes ?? "—"}</li>
+    </ul>
+    <p>Sign in at <a href="https://goalslopes.run/admin">goalslopes.run/admin</a> to accept or cancel.</p>
+  `;
+
+  const results = await Promise.allSettled([
+    resend.emails.send({
+      from: FROM_EMAIL,
+      to: p.userEmail,
+      subject: `Run request received — ${when}`,
+      html: userHtml,
+    }),
+    resend.emails.send({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: `New request: ${p.userName} — ${when}`,
+      html: adminHtml,
+    }),
+  ]);
+  for (const r of results) {
+    if (r.status === "rejected") console.error("[email] send failed:", r.reason);
+    else if (r.value && "error" in r.value && r.value.error)
+      console.error("[email] resend error:", r.value.error);
+  }
+}
+
+/** Sent when admin accepts a booking. User gets confirmation + .ics. */
+export async function sendBookingAcceptedEmail(p: BookingEmailPayload): Promise<void> {
+  if (!resend) {
+    console.warn("[email] RESEND_API_KEY not set; skipping accepted email");
     return;
   }
 
@@ -58,47 +108,21 @@ export async function sendBookingEmails(p: BookingEmailPayload): Promise<void> {
 
   const userHtml = `
     <p>Hi ${p.userName},</p>
-    <p>You're on for <strong>${when}</strong> at ${p.location}.</p>
+    <p>You're confirmed for <strong>${when}</strong> at ${p.location}.</p>
     <p>The attached <code>.ics</code> will drop it onto your calendar.
-    Bring water, something you can run in, and whatever question you want answered on the move.</p>
+    Bring water, something to run in, and whatever question you want answered on the move.</p>
     <p>See you out there,<br/>— ${RUNNER_NAME}</p>
   `;
 
-  const adminHtml = `
-    <p><strong>New booking.</strong></p>
-    <ul>
-      <li><strong>Who:</strong> ${p.userName} &lt;${p.userEmail}&gt;</li>
-      <li><strong>When:</strong> ${when}</li>
-      <li><strong>Where:</strong> ${p.location}</li>
-      <li><strong>Notes:</strong> ${p.notes ? p.notes : "—"}</li>
-    </ul>
-    <p>Calendar invite attached.</p>
-  `;
-
-  const results = await Promise.allSettled([
-    resend.emails.send({
-      from: FROM_EMAIL,
-      to: p.userEmail,
-      subject: `Your run with ${RUNNER_NAME} is confirmed — ${when}`,
-      html: userHtml,
-      attachments: [icsAttachment],
-    }),
-    resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `New booking: ${p.userName} — ${when}`,
-      html: adminHtml,
-      attachments: [icsAttachment],
-    }),
-  ]);
-
-  for (const r of results) {
-    if (r.status === "rejected") {
-      console.error("[email] send failed:", r.reason);
-    } else if (r.value && "error" in r.value && r.value.error) {
-      console.error("[email] resend error:", r.value.error);
-    }
-  }
+  const res = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: p.userEmail,
+    subject: `Confirmed: your run with ${RUNNER_NAME} — ${when}`,
+    html: userHtml,
+    attachments: [icsAttachment],
+  });
+  if (res && "error" in res && res.error)
+    console.error("[email] accepted email error:", res.error);
 }
 
 export async function sendMagicLinkEmail(

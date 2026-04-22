@@ -132,6 +132,10 @@ export const bookings = pgTable("bookings", {
   // Location chosen by the user at booking time — independent of slot.location.
   location: text("location").notNull().default("Sullivans at Castle Island"),
   notes: text("notes"),
+  // pending → admin reviews → accepted. Cancels (user or admin) delete the row.
+  status: text("status", { enum: ["pending", "accepted"] })
+    .notNull()
+    .default("pending"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

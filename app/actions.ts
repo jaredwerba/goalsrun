@@ -6,7 +6,7 @@ import { and, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { slots, bookings } from "@/lib/db/schema";
-import { sendBookingEmails } from "@/lib/email";
+import { sendBookingRequestEmails } from "@/lib/email";
 
 async function requireUserId(): Promise<string> {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -49,7 +49,7 @@ export async function bookSlot(
 
       const [inserted] = await tx
         .insert(bookings)
-        .values({ slotId, userId, location, notes: notes || null })
+        .values({ slotId, userId, location, notes: notes || null, status: "pending" })
         .returning({ id: bookings.id });
       await tx
         .update(slots)
@@ -66,7 +66,7 @@ export async function bookSlot(
 
     if (userEmail) {
       try {
-        await sendBookingEmails({
+        await sendBookingRequestEmails({
           bookingId,
           userName,
           userEmail,

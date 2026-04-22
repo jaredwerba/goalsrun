@@ -4,8 +4,8 @@ import { desc, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { bookings, slots, user } from "@/lib/db/schema";
-import { RunnersTable } from "@/components/admin/runners-table";
-import type { AdminBookingRow } from "@/components/admin/runners-table";
+import { AdminDashboard } from "@/components/admin/admin-dashboard";
+import type { AdminBookingRow } from "@/components/admin/admin-dashboard";
 import { ADMIN_LOGIN_EMAIL } from "@/lib/content";
 import type { Metadata } from "next";
 
@@ -14,8 +14,6 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-
-  // Gate: must be signed in as the admin account.
   if (!session?.user || session.user.email !== ADMIN_LOGIN_EMAIL) {
     redirect("/book");
   }
@@ -27,8 +25,9 @@ export default async function AdminPage() {
       runnerEmail: user.email,
       startsAt: slots.startsAt,
       endsAt: slots.endsAt,
-      location: slots.location,
+      location: bookings.location,
       notes: bookings.notes,
+      status: bookings.status,
       bookedAt: bookings.createdAt,
     })
     .from(bookings)
@@ -44,46 +43,40 @@ export default async function AdminPage() {
         endsAt: r.endsAt.toISOString(),
         location: r.location,
         notes: r.notes,
+        status: r.status as "pending" | "accepted",
         bookedAt: r.bookedAt.toISOString(),
       })),
     );
 
-  const upcoming = rows.filter((r) => new Date(r.startsAt) >= new Date());
-  const past = rows.filter((r) => new Date(r.startsAt) < new Date());
+  const now = new Date().toISOString();
+  const pending = rows.filter((r) => r.status === "pending" && r.startsAt > now);
+  const upcoming = rows.filter((r) => r.status === "accepted" && r.startsAt > now);
+  const past = rows.filter((r) => r.startsAt <= now).sort(
+    (a, b) => new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime(),
+  );
+
+  const totalPending = pending.length;
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-16 space-y-12">
+    <div className="mx-auto max-w-4xl px-6 py-16 space-y-10">
       <header className="space-y-2">
         <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
           Admin
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight">Runners</h1>
+        <h1 className="text-4xl font-semibold tracking-tight">
+          Dashboard
+          {totalPending > 0 && (
+            <span className="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white align-middle">
+              {totalPending}
+            </span>
+          )}
+        </h1>
         <p className="text-muted-foreground">
-          {upcoming.length} upcoming · {past.length} past
+          {pending.length} pending · {upcoming.length} upcoming · {past.length} past
         </p>
       </header>
 
-      {upcoming.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-            Upcoming
-          </h2>
-          <RunnersTable rows={upcoming} />
-        </section>
-      )}
-
-      {past.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-            Past
-          </h2>
-          <RunnersTable rows={past} />
-        </section>
-      )}
-
-      {rows.length === 0 && (
-        <p className="text-muted-foreground">No bookings yet.</p>
-      )}
+      <AdminDashboard pending={pending} upcoming={upcoming} past={past} />
     </div>
   );
 }

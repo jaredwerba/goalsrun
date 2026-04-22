@@ -47,6 +47,7 @@ async function getUserBookings(userId: string) {
         endsAt: slots.endsAt,
         location: bookings.location,
         notes: bookings.notes,
+        status: bookings.status,
       })
       .from(bookings)
       .innerJoin(slots, eq(bookings.slotId, slots.id))
@@ -60,6 +61,7 @@ async function getUserBookings(userId: string) {
         endsAt: slots.endsAt,
         location: bookings.location,
         notes: bookings.notes,
+        status: bookings.status,
       })
       .from(bookings)
       .innerJoin(slots, eq(bookings.slotId, slots.id))
@@ -75,6 +77,7 @@ async function getUserBookings(userId: string) {
     endsAt: r.endsAt.toISOString(),
     location: r.location,
     notes: r.notes,
+    status: (r.status ?? "pending") as "pending" | "accepted",
   });
 
   return {
