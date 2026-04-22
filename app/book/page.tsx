@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { slots } from "@/lib/db/schema";
 import { SlotCalendar } from "@/components/schedule/slot-calendar";
 import { SignupGate } from "@/components/schedule/signup-gate";
+import { RecoveryBanner } from "@/components/schedule/recovery-banner";
 import { Badge } from "@/components/ui/badge";
 import {
   BOOKING_LOCATION,
@@ -33,13 +34,25 @@ async function getOpenSlots() {
   }
 }
 
-export default async function BookPage() {
+export default async function BookPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const session = await auth.api.getSession({ headers: await headers() });
   const isSignedIn = !!session?.user;
   const openSlots = isSignedIn ? await getOpenSlots() : [];
+  const params = await searchParams;
+  const recoveryMode =
+    params.error === "magic"
+      ? ("error" as const)
+      : params.recovered === "1" && isSignedIn
+        ? ("recovered" as const)
+        : null;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 space-y-16">
+      {recoveryMode && <RecoveryBanner mode={recoveryMode} />}
       <header className="space-y-5">
         <Badge variant="secondary" className="w-fit">
           First run is free

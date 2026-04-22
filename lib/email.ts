@@ -101,6 +101,36 @@ export async function sendBookingEmails(p: BookingEmailPayload): Promise<void> {
   }
 }
 
+export async function sendMagicLinkEmail(
+  email: string,
+  url: string,
+): Promise<void> {
+  if (!resend) {
+    console.warn("[email] RESEND_API_KEY not set; skipping magic link");
+    return;
+  }
+
+  const html = `
+    <p>Hi,</p>
+    <p>Click the link below to sign in to your account with ${RUNNER_NAME}.
+    The link expires in 5 minutes and can only be used once.</p>
+    <p><a href="${url}" style="display:inline-block;padding:10px 18px;background:#111;color:#fff;text-decoration:none;border-radius:8px">Sign in</a></p>
+    <p style="color:#6b7280;font-size:12px">Or paste this URL into your browser:<br/>${url}</p>
+    <p style="color:#6b7280;font-size:12px">If you didn't request this, ignore this email — no sign-in will happen.</p>
+  `;
+
+  const res = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: `Your sign-in link for ${RUNNER_NAME}`,
+    html,
+  });
+  if (res && "error" in res && res.error) {
+    console.error("[email] magic link resend error:", res.error);
+    throw new Error("Could not send sign-in email.");
+  }
+}
+
 export type PartnerInquiryPayload = {
   brand: string;
   contactName: string;
