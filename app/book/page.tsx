@@ -45,7 +45,7 @@ async function getUserBookings(userId: string) {
         slotId: slots.id,
         startsAt: slots.startsAt,
         endsAt: slots.endsAt,
-        location: slots.location,
+        location: bookings.location,
         notes: bookings.notes,
       })
       .from(bookings)
@@ -58,7 +58,7 @@ async function getUserBookings(userId: string) {
         slotId: slots.id,
         startsAt: slots.startsAt,
         endsAt: slots.endsAt,
-        location: slots.location,
+        location: bookings.location,
         notes: bookings.notes,
       })
       .from(bookings)

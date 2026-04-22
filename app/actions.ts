@@ -17,13 +17,14 @@ async function requireUserId(): Promise<string> {
 type SlotInfo = {
   startsAt: Date;
   endsAt: Date;
-  location: string;
+  location: string; // user-chosen, passed into the transaction
 };
 
 export async function bookSlot(
   slotId: string,
+  location: string,
   notes?: string,
-): Promise<{ ok: true } | { ok: false; error: string }> {
+): Promise<{ ok: true; bookingId: string } | { ok: false; error: string }> {
   try {
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session?.user?.id) throw new Error("You must be signed in.");
@@ -38,7 +39,6 @@ export async function bookSlot(
           status: slots.status,
           startsAt: slots.startsAt,
           endsAt: slots.endsAt,
-          location: slots.location,
         })
         .from(slots)
         .where(eq(slots.id, slotId))
@@ -49,7 +49,7 @@ export async function bookSlot(
 
       const [inserted] = await tx
         .insert(bookings)
-        .values({ slotId, userId, notes: notes || null })
+        .values({ slotId, userId, location, notes: notes || null })
         .returning({ id: bookings.id });
       await tx
         .update(slots)
@@ -59,7 +59,7 @@ export async function bookSlot(
       const info: SlotInfo = {
         startsAt: row.startsAt,
         endsAt: row.endsAt,
-        location: row.location,
+        location,
       };
       return { bookingId: inserted.id, slotInfo: info };
     });
@@ -82,7 +82,8 @@ export async function bookSlot(
 
     revalidatePath("/book");
     revalidatePath("/bookings");
-    return { ok: true };
+    revalidatePath("/booking/" + bookingId);
+    return { ok: true, bookingId };
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Booking failed.";
     return { ok: false, error: msg };

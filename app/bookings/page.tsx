@@ -23,7 +23,7 @@ export default async function BookingsPage() {
       slotId: slots.id,
       startsAt: slots.startsAt,
       endsAt: slots.endsAt,
-      location: slots.location,
+      location: bookings.location,
       notes: bookings.notes,
     })
     .from(bookings)

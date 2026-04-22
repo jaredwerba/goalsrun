@@ -43,6 +43,8 @@ const DAILY_SLOTS: Seed[] = [
   { startHourET: 16, startMinET: 45, lenMin: 45 },
   { startHourET: 17, startMinET: 30, lenMin: 45 },
   { startHourET: 18, startMinET: 15, lenMin: 45 },
+  // 6:45 PM → 7:30 PM (end of evening window)
+  { startHourET: 18, startMinET: 45, lenMin: 45 },
 ];
 
 async function main() {

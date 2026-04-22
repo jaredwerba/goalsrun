@@ -129,6 +129,8 @@ export const bookings = pgTable("bookings", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  // Location chosen by the user at booking time — independent of slot.location.
+  location: text("location").notNull().default("Sullivans at Castle Island"),
   notes: text("notes"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
