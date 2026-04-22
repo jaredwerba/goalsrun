@@ -90,7 +90,7 @@ export const STACK = {
     { brand: "Strava", product: "Training log · every run since 2014" },
   ] as StackItem[],
   apparel: [
-    { brand: "Tracksmith", product: "Race singlet" },
+    { brand: "PYNRS", product: "Race singlet" },
     { brand: "Nike", product: "Training shorts" },
     { brand: "Balega", product: "Hidden Comfort socks" },
   ] as StackItem[],
@@ -121,14 +121,7 @@ export type Sponsor = {
   logo: string;
 };
 
-export const SPONSORS: Sponsor[] = [
-  {
-    slug: "pynrs",
-    name: "PYNRS",
-    url: "https://pynrs.com",
-    logo: "/images/sponsors/pynrs-white.png",
-  },
-];
+export const SPONSORS: Sponsor[] = [];
 
 export const AUDIENCE = {
   instagram: {
