@@ -31,7 +31,7 @@ export function HeroBackdrop() {
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
       <Image
-        src="/images/hero.jpeg"
+        src="/images/goalshero.png"
         alt=""
         fill
         priority

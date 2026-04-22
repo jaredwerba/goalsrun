@@ -3,10 +3,10 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Files that exist in /public/images but shouldn't appear in the gallery.
-// - hero.jpeg: used as the hero backdrop
+// - goalshero.png: used as the hero backdrop
 // - photo_080.jpg: has burned-in social-media caption, clashes with editorial tone
 // - IMG_2049.JPG: featured as the Bio portrait
-const EXCLUDE = new Set(["hero.jpeg", "photo_080.jpg", "IMG_2049.JPG"]);
+const EXCLUDE = new Set(["goalshero.png", "photo_080.jpg", "IMG_2049.JPG"]);
 
 function listImages(): string[] {
   const dir = path.join(process.cwd(), "public", "images");
