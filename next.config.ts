@@ -18,6 +18,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Canonicalize www → apex. Both hosts resolve to the same Vercel
+  // deployment, but apex is the canonical (sitemap, OG, metadataBase,
+  // passkey rpID). 308 permanent preserves method/body, so in-flight
+  // POSTs (e.g. /api/auth/*) are redirected cleanly.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.goalslopes.run" }],
+        permanent: true,
+        destination: "https://goalslopes.run/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
