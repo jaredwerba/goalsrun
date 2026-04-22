@@ -1,0 +1,44 @@
+# Goals Lopes
+
+> Goals Lopes is a 43-year-old masters marathoner based in Boston. Boston Marathon 2:42 (2026), Berlin 2:48, Chicago 2:52, half 1:16. Father of three girls, born in Cape Verde. Trains 90 miles a week out of Castle Island in South Boston. Coaches 1:1 at Castle Island and accepts brand partnerships.
+
+This site is a media kit + booking portal for two audiences:
+
+- **Brand managers** evaluating a masters-age endurance athlete for footwear, apparel, nutrition, recovery, race-entry, or media partnerships.
+- **Runners** in the Boston area who want 1:1 coaching at Castle Island.
+
+Goals' voice emphasizes **longevity and consistency over chasing faster every year**. The story he tells is the twenty-year career — still running PRs at 43 when most people his age have quit — not a single-season arc.
+
+## Key pages
+
+- [Home](https://goalsrun.vercel.app/): bio, race record, training rhythm, links to book and partners.
+- [Partners](https://goalsrun.vercel.app/partners): the media kit. Pitch, 8-stat physiology block, race record table, Instagram + Strava handles, current sponsors (PYNRS), gear stack (shoes, watch, tech, apparel, nutrition, recovery), contact form, and dedicated per-brand pitch pages.
+- [Book](https://goalsrun.vercel.app/book): book a 1:1 coaching run at Castle Island. Session types include Norwegian 4×400s, lactate-threshold runs, and running-economy work.
+
+## Per-brand pitch pages
+
+Each has `whyBrand / whyGoals / whyNow / whyFirst` prose plus hero and support images. Linked from `/partners#brands`.
+
+- [Nike](https://goalsrun.vercel.app/partners/nike)
+- [Adidas](https://goalsrun.vercel.app/partners/adidas)
+- [Hoka](https://goalsrun.vercel.app/partners/hoka)
+- [Garmin](https://goalsrun.vercel.app/partners/garmin)
+- [Whoop](https://goalsrun.vercel.app/partners/whoop)
+- [Maurten](https://goalsrun.vercel.app/partners/maurten)
+- [Normatec](https://goalsrun.vercel.app/partners/normatec)
+- [Tracksmith](https://goalsrun.vercel.app/partners/tracksmith)
+- [Theragun](https://goalsrun.vercel.app/partners/theragun)
+- [Balega](https://goalsrun.vercel.app/partners/balega)
+
+## Contact
+
+- **Partnerships**: gersonlopes7@gmail.com (or form at `/partners#work`)
+- **Press**: gersonlopes7@gmail.com
+- **Instagram**: [@goals_zizou](https://www.instagram.com/goals_zizou)
+- **Strava**: [athlete 47881127](https://www.strava.com/athletes/47881127)
+
+## Content usage
+
+See `/robots.txt` for Content-Signal directives. TL;DR: this content is
+ok to index and ok to read at inference time, but please do not ingest
+it into training corpora.

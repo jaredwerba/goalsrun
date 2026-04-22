@@ -1,0 +1,12 @@
+User-Agent: *
+Allow: /
+Disallow: /bookings
+Disallow: /api/
+
+# Content Signals (contentsignals.org / draft-romm-aipref-contentsignals)
+# ai-train=no   — do not ingest this content into training corpora
+# search=yes    — ok to index for classic / AI search
+# ai-input=yes  — ok to read at inference time to answer user questions
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+Sitemap: https://goalsrun.vercel.app/sitemap.xml
