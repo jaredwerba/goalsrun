@@ -12,7 +12,7 @@ Goals' voice emphasizes **longevity and consistency over chasing faster every ye
 ## Key pages
 
 - [Home](https://goalsrun.vercel.app/): bio, race record, training rhythm, links to book and partners.
-- [Partners](https://goalsrun.vercel.app/partners): the media kit. Pitch, 8-stat physiology block, race record table, Instagram + Strava handles, current sponsors (PYNRS), gear stack (shoes, watch, tech, apparel, nutrition, recovery), contact form, and dedicated per-brand pitch pages.
+- [Partners](https://goalsrun.vercel.app/partners): the media kit. Pitch, 8-stat physiology block, race record table, Instagram + Strava handles, gear stack (shoes incl. Nike / Adidas / Hoka, apparel incl. PYNRS race singlet, tech incl. Garmin + Whoop, fuel + recovery), contact form, and dedicated per-brand pitch pages.
 - [Book](https://goalsrun.vercel.app/book): book a 1:1 coaching run at Castle Island. Session types include Norwegian 4×400s, lactate-threshold runs, and running-economy work.
 
 ## Per-brand pitch pages
