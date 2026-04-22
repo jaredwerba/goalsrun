@@ -181,9 +181,15 @@ export const DELIVERABLES = [
   "Appearances at Boston-area events, podcasts, brand activations",
 ];
 
-export const BOOKING_LOCATION = "Castle Island, South Boston";
+export const BOOKING_LOCATION = "Sullivans at Castle Island";
 export const BOOKING_BLURB =
-  "Join me for a 1:1 loop around Castle Island. Easy pace, good conversation.";
+  "Meet me at Sullivans at Castle Island. 1:1 coaching on the loop. Easy pace, real feedback.";
+
+/** Email address users can message Goals directly (opens in their mail client). */
+export const GOALS_EMAIL = "gersonlopes7@gmail.com";
+
+/** Email that has admin access to /admin — Goals creates this account with his passkey. */
+export const ADMIN_LOGIN_EMAIL = "admin@goalslopes.run";
 
 export type SessionType = { name: string; desc: string };
 export const SESSION_TYPES: SessionType[] = [
