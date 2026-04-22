@@ -4,9 +4,9 @@ export const RUNNER_FIRST_NAME = "Goals";
 export const AGE = 43;
 
 export const TAGLINE =
-  "Forty-three. Father of two. Longevity is the next PR.";
+  "Forty-three. Father of three. Longevity is the next PR.";
 
-export const BIO = `As I age, I've come to terms with one critical realization: what motivates me to run at 43 is different than at 22. My life has changed; I've changed. As an unproven young kid from Cape Verde, I desperately wanted to live up to my potential. Today — 43 years old, a father of two girls, having been around the track a few times — I've had the opportunity to live out much of that potential. My future potential now lies in my ability to maintain my longevity and consistency.
+export const BIO = `As I age, I've come to terms with one critical realization: what motivates me to run at 43 is different than at 22. My life has changed; I've changed. As an unproven young kid from Cape Verde, I desperately wanted to live up to my potential. Today — 43 years old, a father of three girls, having been around the track a few times — I've had the opportunity to live out much of that potential. My future potential now lies in my ability to maintain my longevity and consistency.
 
 Longevity and consistency are what every workout now answers to. Ninety miles a week out of Castle Island in South Boston. Intervals on Tuesday, threshold on Thursday, long on Sunday — most of it before my daughters wake up. Boston 2026 was 2:42, and I'm proud of the time. But I'm more proud of the twenty years that got me there, and the twenty more I'm trying to build.
 
@@ -104,6 +104,32 @@ export const STACK = {
   ] as StackItem[],
 };
 
+// Brands Goals is actively partnered with. Renders the "Current
+// sponsors" wall on /partners — proof that real brands are already
+// backing him before a prospect reads the rest of the kit.
+//
+// To add a sponsor:
+//   1. Drop a logo into /public/images/sponsors/. White-on-transparent
+//      preferred; the wall uses a dark card so a white mark reads well.
+//   2. Add a { slug, name, url, logo } entry below.
+//   3. Redeploy.
+export type Sponsor = {
+  slug: string;
+  name: string;
+  url: string;
+  /** Path under /public; include extension. */
+  logo: string;
+};
+
+export const SPONSORS: Sponsor[] = [
+  {
+    slug: "pynrs",
+    name: "PYNRS",
+    url: "https://pynrs.com",
+    logo: "/images/sponsors/pynrs-white.png",
+  },
+];
+
 export const AUDIENCE = {
   instagram: {
     handle: "@goals_zizou",
@@ -132,7 +158,7 @@ export const PRESS_EMAIL =
 export const PARTNERSHIPS_EMAIL =
   process.env.PARTNERSHIPS_EMAIL ?? "gersonlopes7@gmail.com";
 
-export const PARTNERS_PITCH = `The running audience is aging up, and most "elite" talent is 25. I'm 43, a father of two, Cape Verdean kid who came up with something to prove — and the story I can actually tell now isn't about chasing faster every year. It's longevity. It's consistency. It's what it takes to still be running PRs at 43 when most people my age have quit. That's the story brands selling to real runners need to tell, and too few of us are telling it. I make credible, detailed content: gear reviews that read like race reports, workouts that break down why they work, Castle Island footage most weeks of the year.`;
+export const PARTNERS_PITCH = `The running audience is aging up, and most "elite" talent is 25. I'm 43, a father of three, Cape Verdean kid who came up with something to prove — and the story I can actually tell now isn't about chasing faster every year. It's longevity. It's consistency. It's what it takes to still be running PRs at 43 when most people my age have quit. That's the story brands selling to real runners need to tell, and too few of us are telling it. I make credible, detailed content: gear reviews that read like race reports, workouts that break down why they work, Castle Island footage most weeks of the year.`;
 
 export const PARTNERSHIP_TYPES = [
   "Footwear",

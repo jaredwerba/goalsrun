@@ -94,7 +94,7 @@ export const BRAND_PITCHES: BrandPitch[] = [
     whyBrand:
       "Puma's running resurgence is the most interesting story in footwear right now. Deviate Nitro Elite is a legitimate race shoe, and the brand heritage — Cape Verde sponsor nation, Bolt, the football crossover — is personal to me in a way no other brand comes close to.",
     whyGoals:
-      "I was an unproven young kid from Cape Verde, and Puma was the brand on the wall. Twenty years later I'm 43, a father of two girls, and running 2:42 at Boston. Signing the first Cape Verdean masters marathoner to a Puma running deal is a story that already has a beginning, a middle, and a finish line — you just haven't put your name on it yet.",
+      "I was an unproven young kid from Cape Verde, and Puma was the brand on the wall. Twenty years later I'm 43, a father of three girls, and running 2:42 at Boston. Signing the first Cape Verdean masters marathoner to a Puma running deal is a story that already has a beginning, a middle, and a finish line — you just haven't put your name on it yet.",
     whyNow:
       "Puma is pushing into US endurance with Nitro Elite and a new marathon program. I'm a Boston-based 2:42 masters runner with a decade of documented training, a home-city race on the calendar, and a heritage story your team can actually lean into. The timing does not repeat.",
     whyFirst:
@@ -121,7 +121,7 @@ export const BRAND_PITCHES: BrandPitch[] = [
     whyBrand:
       "Hoka redefined what cushion can do for a distance runner. The masters category is already yours by default — every road and trail runner over 40 I know owns at least one pair. You have the audience I'm built for, and the shoe I actually train in.",
     whyGoals:
-      "I am the story Hoka should be telling. 43 years old, 90 miles a week, father of two, Clifton 9 on easy long runs six days out of seven. My edge at this age isn't chasing faster — it's longevity. Staying healthy, staying consistent, still in it at 50. That's the whole masters pitch, and it's the shoe that makes it possible.",
+      "I am the story Hoka should be telling. 43 years old, 90 miles a week, father of three, Clifton 9 on easy long runs six days out of seven. My edge at this age isn't chasing faster — it's longevity. Staying healthy, staying consistent, still in it at 50. That's the whole masters pitch, and it's the shoe that makes it possible.",
     whyNow:
       "Hoka's been chasing elite credibility for five years. Signing a 2:42 masters runner in Boston — the road-running capital of America — is category credibility without paying World Marathon Majors money for a 28-year-old pro. The masters marathon is the least-crowded story in running.",
     whyFirst:
@@ -176,7 +176,7 @@ export const BRAND_PITCHES: BrandPitch[] = [
     whyBrand:
       "Boston brand. Boston Marathon. Boston athlete. New Balance headquarters is three miles from where I train at Castle Island every morning. The geography alone is a campaign — and the brand heritage with the BAA makes the partnership write itself.",
     whyGoals:
-      "I'm not a global sub-2:10 elite. I'm the Boston-local masters runner your core customer actually looks like. A 43-year-old father of two with a 2:42, a full-time life, and a coaching practice at Castle Island is more relatable than any sponsored pro on the roster.",
+      "I'm not a global sub-2:10 elite. I'm the Boston-local masters runner your core customer actually looks like. A 43-year-old father of three with a 2:42, a full-time life, and a coaching practice at Castle Island is more relatable than any sponsored pro on the roster.",
     whyNow:
       "New Balance's running roster skews young. The masters category is massive and underserved — and NB does not have a masters voice in Boston. I live here, I race Boston, I coach at Castle Island. This is a local story that the brand's own neighbors already recognize.",
     whyFirst:

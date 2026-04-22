@@ -18,6 +18,7 @@ import {
   PHYSIOLOGY,
   RUNNER_FIRST_NAME,
   RUNNER_NAME,
+  SPONSORS,
 } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -71,6 +72,11 @@ export default function PartnersPage() {
           {stravaLive && (
             <a href="#strava" className="hover:underline underline-offset-4">
               Strava
+            </a>
+          )}
+          {SPONSORS.length > 0 && (
+            <a href="#sponsors" className="hover:underline underline-offset-4">
+              Sponsors
             </a>
           )}
           <a href="#oncourse" className="hover:underline underline-offset-4">
@@ -237,6 +243,42 @@ export default function PartnersPage() {
       <StravaProof />
 
       <InstagramGrid />
+
+      {SPONSORS.length > 0 && (
+        <section id="sponsors" className="space-y-6">
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+              Current sponsors
+            </p>
+            <h2 className="text-3xl font-semibold tracking-tight">
+              Brands already on board.
+            </h2>
+            <p className="text-muted-foreground max-w-prose">
+              Real partnerships, in training today. Not a wishlist.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {SPONSORS.map((s) => (
+              <a
+                key={s.slug}
+                href={s.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${s.name} (opens in new tab)`}
+                className="group flex aspect-[3/2] items-center justify-center rounded-xl bg-black p-6 hover:bg-neutral-900 transition-colors"
+              >
+                <Image
+                  src={s.logo}
+                  alt={s.name}
+                  width={200}
+                  height={48}
+                  className="max-h-8 w-auto object-contain opacity-95 group-hover:opacity-100 transition-opacity"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section id="oncourse" className="space-y-6">
         <div className="space-y-2">
