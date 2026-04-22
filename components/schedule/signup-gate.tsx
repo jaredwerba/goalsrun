@@ -10,18 +10,27 @@ import { authClient } from "@/lib/auth-client";
 
 type Mode = "signup" | "signin";
 
+// The password column in better-auth is required, so we still generate one at
+// signup — it's just never surfaced to the user. The passkey is the only way
+// in. If a passkey ever dies (lost device, rpID change), a magic-link recovery
+// flow is the path back in. Tracked separately.
+function randomPassword() {
+  const a = new Uint8Array(18);
+  crypto.getRandomValues(a);
+  return Array.from(a, (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 export function SignupGate() {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("signup");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
   async function createAccount(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !email.trim() || password.length < 8) {
-      toast.error("Name, email, and a password (8+ chars) are required.");
+    if (!name.trim() || !email.trim()) {
+      toast.error("Name and email are required.");
       return;
     }
     setBusy(true);
@@ -29,54 +38,49 @@ export function SignupGate() {
       const signUp = await authClient.signUp.email({
         email: email.trim(),
         name: name.trim(),
-        password,
+        password: randomPassword(),
       });
       if (signUp?.error) {
-        toast.error(signUp.error.message || "Sign-up failed.");
+        toast.error(
+          signUp.error.message ||
+            "Sign-up failed. If you already have an account, sign in instead.",
+        );
         return;
       }
-      // Optional passkey. If this fails the account is still fine.
+      // Account is active (autoSignIn). Register a passkey so the user has a
+      // way back in next time. If registration fails or is canceled, the
+      // account still exists — we nudge them to retry.
       try {
-        await authClient.passkey.addPasskey({ name: "Primary" });
+        const pk = await authClient.passkey.addPasskey({ name: "Primary" });
+        if (pk && "error" in pk && pk.error) {
+          toast.error(
+            pk.error.message ||
+              "Account created, but the passkey wasn't saved. Sign out and try again.",
+          );
+          return;
+        }
       } catch {
-        // Ignore — user can add a passkey later after signing in.
-      }
-      toast.success("Account ready. Pick a slot below.");
-      router.refresh();
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function signInWithPassword(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim() || !password) {
-      toast.error("Email and password are required.");
-      return;
-    }
-    setBusy(true);
-    try {
-      const res = await authClient.signIn.email({
-        email: email.trim(),
-        password,
-      });
-      if (res?.error) {
-        toast.error(res.error.message || "Sign-in failed.");
+        toast.error(
+          "Account created, but the passkey wasn't saved. Sign out and try again.",
+        );
         return;
       }
+      toast.success("You're in. Pick a slot below.");
       router.refresh();
     } finally {
       setBusy(false);
     }
   }
 
-  async function signInWithPasskey() {
+  async function signInWithPasskey(e: React.FormEvent) {
+    e.preventDefault();
     setBusy(true);
     try {
       const res = await authClient.signIn.passkey();
       if (res?.error) {
         toast.error(
-          res.error.message || "No passkey found. Use email + password.",
+          res.error.message ||
+            "No passkey found on this device. Create an account first.",
         );
         return;
       }
@@ -99,13 +103,11 @@ export function SignupGate() {
           : "Sign in to see open slots"}
       </h3>
       <p className="mt-2 text-sm text-muted-foreground max-w-prose">
-        {isSignup
-          ? "Takes ten seconds. Your first run with Goals is free."
-          : "Welcome back. Passkey or password — whichever is handy."}
+        No passwords. Face ID or your device passkey. Ten seconds.
       </p>
 
       <form
-        onSubmit={isSignup ? createAccount : signInWithPassword}
+        onSubmit={isSignup ? createAccount : signInWithPasskey}
         className="mt-6 space-y-4 max-w-md"
       >
         {isSignup && (
@@ -127,52 +129,20 @@ export function SignupGate() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-            required
+            autoComplete={isSignup ? "email" : "username webauthn"}
+            required={isSignup}
           />
         </div>
-        <div className="grid gap-2">
-          <Label htmlFor="gate-password">Password</Label>
-          <Input
-            id="gate-password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete={isSignup ? "new-password" : "current-password"}
-            minLength={8}
-            required
-          />
-          {isSignup && (
-            <p className="text-xs text-muted-foreground">
-              8+ characters. You can add a passkey after signing in.
-            </p>
-          )}
-        </div>
-        <div className="flex flex-wrap items-center gap-3 pt-1">
-          <Button type="submit" disabled={busy}>
-            {isSignup ? "Create account" : "Sign in"}
-          </Button>
-          {!isSignup && (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={signInWithPasskey}
-              disabled={busy}
-            >
-              Use passkey
-            </Button>
-          )}
-        </div>
+        <Button type="submit" disabled={busy} className="w-full sm:w-auto">
+          {isSignup ? "Create account with Face ID" : "Sign in with Face ID"}
+        </Button>
       </form>
 
       <p className="mt-6 text-sm text-muted-foreground">
         {isSignup ? "Already have an account?" : "New here?"}{" "}
         <button
           type="button"
-          onClick={() => {
-            setMode(isSignup ? "signin" : "signup");
-            setPassword("");
-          }}
+          onClick={() => setMode(isSignup ? "signin" : "signup")}
           disabled={busy}
           className="underline underline-offset-4 hover:text-foreground disabled:opacity-50"
         >
