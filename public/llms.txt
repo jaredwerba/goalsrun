@@ -11,24 +11,24 @@ Goals' voice emphasizes **longevity and consistency over chasing faster every ye
 
 ## Key pages
 
-- [Home](https://goalsrun.vercel.app/): bio, race record, training rhythm, links to book and partners.
-- [Partners](https://goalsrun.vercel.app/partners): the media kit. Pitch, 8-stat physiology block, race record table, Instagram + Strava handles, gear stack (shoes incl. Nike / Adidas / Hoka, apparel incl. PYNRS race singlet, tech incl. Garmin + Whoop, fuel + recovery), contact form, and dedicated per-brand pitch pages.
-- [Book](https://goalsrun.vercel.app/book): book a 1:1 coaching run at Castle Island. Session types include Norwegian 4×400s, lactate-threshold runs, and running-economy work.
+- [Home](https://goalslopes.run/): bio, race record, training rhythm, links to book and partners.
+- [Partners](https://goalslopes.run/partners): the media kit. Pitch, 8-stat physiology block, race record table, Instagram + Strava handles, gear stack (shoes incl. Nike / Adidas / Hoka, apparel incl. PYNRS race singlet, tech incl. Garmin + Whoop, fuel + recovery), contact form, and dedicated per-brand pitch pages.
+- [Book](https://goalslopes.run/book): book a 1:1 coaching run at Castle Island. Session types include Norwegian 4×400s, lactate-threshold runs, and running-economy work.
 
 ## Per-brand pitch pages
 
 Each has `whyBrand / whyGoals / whyNow / whyFirst` prose plus hero and support images. Linked from `/partners#brands`.
 
-- [Nike](https://goalsrun.vercel.app/partners/nike)
-- [Adidas](https://goalsrun.vercel.app/partners/adidas)
-- [Hoka](https://goalsrun.vercel.app/partners/hoka)
-- [Garmin](https://goalsrun.vercel.app/partners/garmin)
-- [Whoop](https://goalsrun.vercel.app/partners/whoop)
-- [Maurten](https://goalsrun.vercel.app/partners/maurten)
-- [Normatec](https://goalsrun.vercel.app/partners/normatec)
-- [Tracksmith](https://goalsrun.vercel.app/partners/tracksmith)
-- [Theragun](https://goalsrun.vercel.app/partners/theragun)
-- [Balega](https://goalsrun.vercel.app/partners/balega)
+- [Nike](https://goalslopes.run/partners/nike)
+- [Adidas](https://goalslopes.run/partners/adidas)
+- [Hoka](https://goalslopes.run/partners/hoka)
+- [Garmin](https://goalslopes.run/partners/garmin)
+- [Whoop](https://goalslopes.run/partners/whoop)
+- [Maurten](https://goalslopes.run/partners/maurten)
+- [Normatec](https://goalslopes.run/partners/normatec)
+- [Tracksmith](https://goalslopes.run/partners/tracksmith)
+- [Theragun](https://goalslopes.run/partners/theragun)
+- [Balega](https://goalslopes.run/partners/balega)
 
 ## Contact
 

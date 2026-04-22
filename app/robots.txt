@@ -9,4 +9,4 @@ Disallow: /api/
 # ai-input=yes  — ok to read at inference time to answer user questions
 Content-Signal: ai-train=no, search=yes, ai-input=yes
 
-Sitemap: https://goalsrun.vercel.app/sitemap.xml
+Sitemap: https://goalslopes.run/sitemap.xml

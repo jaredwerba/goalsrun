@@ -25,7 +25,7 @@ const graduate = Graduate({
   weight: "400",
 });
 
-const host = process.env.NEXT_PUBLIC_SITE_HOST || "goalsrun.vercel.app";
+const host = process.env.NEXT_PUBLIC_SITE_HOST || "goalslopes.run";
 
 export const viewport: Viewport = {
   themeColor: "#000000",

@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import * as schema from "@/lib/db/schema";
 
 const isProd = process.env.NODE_ENV === "production";
-const prodHost = process.env.NEXT_PUBLIC_SITE_HOST || "goalsrun.vercel.app";
+const prodHost = process.env.NEXT_PUBLIC_SITE_HOST || "goalslopes.run";
 const prodOrigin = `https://${prodHost}`;
 
 export const auth = betterAuth({

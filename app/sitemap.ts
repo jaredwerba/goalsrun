@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { BRAND_PITCHES } from "@/lib/brand-pitches";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const host = process.env.NEXT_PUBLIC_SITE_HOST || "goalsrun.vercel.app";
+  const host = process.env.NEXT_PUBLIC_SITE_HOST || "goalslopes.run";
   const base = `https://${host}`;
   return [
     { url: `${base}/`, priority: 1 },
