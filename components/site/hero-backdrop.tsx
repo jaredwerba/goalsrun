@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const BLUR_MASK =
@@ -9,6 +8,7 @@ const BLUR_MASK =
 export function HeroBackdrop() {
   const [scrollY, setScrollY] = useState(0);
   const raf = useRef<number | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -26,17 +26,47 @@ export function HeroBackdrop() {
     };
   }, []);
 
+  // Respect `prefers-reduced-motion` — freeze on the poster frame
+  // instead of autoplaying. Watches for the user changing the setting
+  // mid-session too (rare but trivial to support).
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      const v = videoRef.current;
+      if (!v) return;
+      if (mq.matches) {
+        v.pause();
+      } else {
+        // Mobile Safari / Chrome may still reject .play() if the user
+        // hasn't interacted with the page yet; poster stays visible as
+        // the fallback, so we just swallow the rejection.
+        v.play().catch(() => {});
+      }
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   const blur = Math.min(20, scrollY / 28);
 
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
-      <Image
-        src="/images/goalshero.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+      <video
+        ref={videoRef}
+        src="/images/video.mp4"
+        poster="/images/video-poster.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        // `metadata` — don't eat a ~636KB download on page load for
+        // users who scroll away before the hero is even in view. The
+        // poster stays visible until the first frame decodes.
+        preload="metadata"
+        disablePictureInPicture
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
       <div
         className="absolute inset-0 will-change-[backdrop-filter]"
