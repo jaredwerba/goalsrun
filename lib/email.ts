@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { buildIcs } from "./ics";
 import { PARTNERSHIPS_EMAIL, RUNNER_NAME } from "./content";
+import { signAdminToken } from "./admin-tokens";
 
 const FROM_EMAIL = process.env.FROM_EMAIL ?? "Goals Lopes <bookings@jwerba.com>";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "gersonlopes7@gmail.com";
@@ -49,6 +50,14 @@ export async function sendBookingRequestEmails(p: BookingEmailPayload): Promise<
     <p>— ${RUNNER_NAME}</p>
   `;
 
+  const siteBase = process.env.NEXT_PUBLIC_SITE_HOST
+    ? `https://${process.env.NEXT_PUBLIC_SITE_HOST}`
+    : "https://goalslopes.run";
+  const acceptToken = signAdminToken(p.bookingId, "accept");
+  const cancelToken = signAdminToken(p.bookingId, "cancel");
+  const acceptUrl = `${siteBase}/admin/action?token=${acceptToken}`;
+  const cancelUrl = `${siteBase}/admin/action?token=${cancelToken}`;
+
   const adminHtml = `
     <p><strong>New run request — pending your review.</strong></p>
     <ul>
@@ -57,7 +66,11 @@ export async function sendBookingRequestEmails(p: BookingEmailPayload): Promise<
       <li><strong>Where:</strong> ${p.location}</li>
       <li><strong>Notes:</strong> ${p.notes ?? "—"}</li>
     </ul>
-    <p>Sign in at <a href="https://goalslopes.run/admin">goalslopes.run/admin</a> to accept or cancel.</p>
+    <p style="margin-top:24px">
+      <a href="${acceptUrl}" style="display:inline-block;padding:10px 20px;background:#16a34a;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;margin-right:12px">Accept run</a>
+      <a href="${cancelUrl}" style="display:inline-block;padding:10px 20px;background:#dc2626;color:#fff;text-decoration:none;border-radius:8px;font-weight:600">Cancel request</a>
+    </p>
+    <p style="color:#6b7280;font-size:12px;margin-top:16px">Links expire in 72 hours. Or manage at <a href="${siteBase}/admin">goalslopes.run/admin</a>.</p>
   `;
 
   const results = await Promise.allSettled([

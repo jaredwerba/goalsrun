@@ -188,8 +188,8 @@ export const BOOKING_BLURB =
 /** Email address users can message Goals directly (opens in their mail client). */
 export const GOALS_EMAIL = "gersonlopes7@gmail.com";
 
-/** Email that has admin access to /admin — Goals creates this account with his passkey. */
-export const ADMIN_LOGIN_EMAIL = "admin@goalslopes.run";
+/** Email that has admin access to /admin — Goals' personal Gmail. */
+export const ADMIN_LOGIN_EMAIL = "gersonlopes7@gmail.com";
 
 export type SessionType = { name: string; desc: string };
 export const SESSION_TYPES: SessionType[] = [
