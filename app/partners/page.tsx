@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Stack } from "@/components/site/stack";
-import { StravaProof } from "@/components/site/strava-proof";
 import { InstagramGrid } from "@/components/site/instagram-grid";
 import { PartnerContactForm } from "@/components/partners/contact-form";
 import { BRAND_PITCHES } from "@/lib/brand-pitches";
-import { hasStravaCredentials } from "@/lib/strava";
 import {
   AGE,
   AUDIENCE,
@@ -45,7 +43,6 @@ function Stat({ label, value, suffix }: { label: string; value: string; suffix?:
 }
 
 export default function PartnersPage() {
-  const stravaLive = hasStravaCredentials();
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 space-y-20">
       <header className="space-y-5">
@@ -69,11 +66,6 @@ export default function PartnersPage() {
           <a href="#audience" className="hover:underline underline-offset-4">
             Find me
           </a>
-          {stravaLive && (
-            <a href="#strava" className="hover:underline underline-offset-4">
-              Strava
-            </a>
-          )}
           {SPONSORS.length > 0 && (
             <a href="#sponsors" className="hover:underline underline-offset-4">
               Sponsors
@@ -239,8 +231,6 @@ export default function PartnersPage() {
           </div>
         </div>
       </section>
-
-      <StravaProof />
 
       <InstagramGrid />
 
