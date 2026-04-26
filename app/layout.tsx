@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono, Graduate } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -84,6 +85,7 @@ export default function RootLayout({
         <Footer />
         <Toaster richColors position="top-center" />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
