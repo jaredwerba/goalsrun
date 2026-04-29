@@ -189,11 +189,18 @@ export const BOOKING_BLURB =
 export const GOALS_EMAIL = "gersonlopes7@gmail.com";
 
 /** Emails that have admin access to /admin. Goals is the primary
- *  admin; werba@duck.com is the developer account for testing. */
+ *  admin (operator view); werba@duck.com is the owner/developer
+ *  account (business analytics view). */
 export const ADMIN_LOGIN_EMAILS = [
   "gersonlopes7@gmail.com",
   "werba@duck.com",
 ] as const;
+
+/** Goals' email — operator view at /admin. */
+export const ADMIN_OPERATOR_EMAIL = "gersonlopes7@gmail.com";
+
+/** Owner / developer email — business-analytics view at /admin. */
+export const ADMIN_OWNER_EMAIL = "werba@duck.com";
 
 /** True if the given email is allowed to access /admin. Case-insensitive. */
 export function isAdminEmail(email: string | null | undefined): boolean {
@@ -203,6 +210,27 @@ export function isAdminEmail(email: string | null | undefined): boolean {
     (a) => a.toLowerCase() === normalized,
   );
 }
+
+/** Which admin variant to render based on signed-in email. */
+export function adminViewFor(
+  email: string | null | undefined,
+): "operator" | "owner" | "none" {
+  if (!email) return "none";
+  const normalized = email.toLowerCase();
+  if (normalized === ADMIN_OWNER_EMAIL.toLowerCase()) return "owner";
+  if (normalized === ADMIN_OPERATOR_EMAIL.toLowerCase()) return "operator";
+  // Other admins (none currently) default to operator view.
+  return isAdminEmail(email) ? "operator" : "none";
+}
+
+/** Placeholder business assumptions used in the owner analytics view.
+ *  Replace with real billing/distance tracking once it exists. */
+export const SESSION_ECONOMICS = {
+  /** Average miles per 45-min coached session — rough estimate. */
+  milesPerSession: 5,
+  /** Price per session in USD. */
+  dollarsPerSession: 100,
+} as const;
 
 export type SessionType = { name: string; desc: string };
 export const SESSION_TYPES: SessionType[] = [
