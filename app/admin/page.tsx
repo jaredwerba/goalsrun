@@ -4,15 +4,16 @@ import { desc, eq, sql } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { bookings, slots, user } from "@/lib/db/schema";
-import { OperatorDashboard } from "@/components/admin/operator-dashboard";
-import { OwnerDashboard } from "@/components/admin/owner-dashboard";
+import {
+  AdminDashboard,
+  type AdminAnalytics,
+} from "@/components/admin/admin-dashboard";
 import type {
   AdminBookingRow,
   CancellationRow,
   RunnerRosterRow,
 } from "@/components/admin/admin-shared";
-import type { OwnerAnalytics } from "@/components/admin/owner-dashboard";
-import { adminViewFor, RUNNER_FIRST_NAME } from "@/lib/content";
+import { isAdminEmail, RUNNER_FIRST_NAME } from "@/lib/content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Admin — goalslopes.run" };
@@ -20,16 +21,11 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  const view = adminViewFor(session?.user?.email);
-  if (!session?.user || view === "none") {
+  if (!session?.user || !isAdminEmail(session.user.email)) {
     redirect("/book");
   }
 
-  // Bigger queries are run for both views — Postgres handles the volume
-  // fine, and it keeps this page-level branching simple. The two
-  // components consume different subsets of the same data.
-
-  // ─── Active bookings (pending + accepted) ───────────────────────────
+  // ─── Active bookings (pending + accepted) ─────────────────────────────
   const activeRows: AdminBookingRow[] = await db
     .select({
       bookingId: bookings.id,
@@ -62,7 +58,7 @@ export default async function AdminPage() {
         })),
     );
 
-  // ─── Cancellations (audit log) ──────────────────────────────────────
+  // ─── Cancellations (audit log) ────────────────────────────────────────
   const cancellations: CancellationRow[] = await db
     .select({
       bookingId: bookings.id,
@@ -94,53 +90,7 @@ export default async function AdminPage() {
       })),
     );
 
-  // ─── Split active rows into pending / upcoming / past ───────────────
-  const now = new Date().toISOString();
-  const pending = activeRows.filter(
-    (r) => r.status === "pending" && r.startsAt > now,
-  );
-  const upcoming = activeRows.filter(
-    (r) => r.status === "accepted" && r.startsAt > now,
-  );
-  const past = activeRows
-    .filter((r) => r.startsAt <= now)
-    .sort(
-      (a, b) =>
-        new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime(),
-    );
-
-  // ─── Goals (operator) — render lean dashboard and stop here ─────────
-  if (view === "operator") {
-    return (
-      <div className="mx-auto max-w-4xl px-6 py-16 space-y-10">
-        <header className="space-y-2">
-          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-            Coach view
-          </p>
-          <h1 className="text-4xl font-semibold tracking-tight">
-            {RUNNER_FIRST_NAME}&apos;s schedule
-            {pending.length > 0 && (
-              <span className="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white align-middle">
-                {pending.length}
-              </span>
-            )}
-          </h1>
-          <p className="text-muted-foreground">
-            Signed in as {session.user.email}
-          </p>
-        </header>
-
-        <OperatorDashboard
-          pending={pending}
-          upcoming={upcoming}
-          past={past}
-          cancellations={cancellations}
-        />
-      </div>
-    );
-  }
-
-  // ─── Werba (owner) — fetch analytics + roster, render business view ─
+  // ─── Analytics rollup (one query, FILTER aggregates) ──────────────────
   type CountsRow = {
     total_pending: string;
     total_accepted: string;
@@ -174,7 +124,7 @@ export default async function AdminPage() {
   const totalAccepted = Number(counts?.total_accepted ?? 0);
   const totalCancelled = Number(counts?.total_cancelled ?? 0);
 
-  const analytics: OwnerAnalytics = {
+  const analytics: AdminAnalytics = {
     totalBooked: totalPending + totalAccepted,
     totalConfirmed: totalAccepted,
     totalPending,
@@ -186,7 +136,7 @@ export default async function AdminPage() {
     openSlotsAhead: Number(openSlots?.open_count ?? 0),
   };
 
-  // Per-runner roster: counts grouped by user
+  // ─── Runner roster ────────────────────────────────────────────────────
   type RosterRowSql = {
     user_id: string;
     name: string;
@@ -229,21 +179,48 @@ export default async function AdminPage() {
       : null,
   }));
 
+  // ─── Split active rows for operational sections ───────────────────────
+  const now = new Date().toISOString();
+  const pending = activeRows.filter(
+    (r) => r.status === "pending" && r.startsAt > now,
+  );
+  const upcoming = activeRows.filter(
+    (r) => r.status === "accepted" && r.startsAt > now,
+  );
+  const past = activeRows
+    .filter((r) => r.startsAt <= now)
+    .sort(
+      (a, b) =>
+        new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime(),
+    );
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-16 space-y-10">
-      <header className="space-y-2">
+      <header className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-500">
         <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-          Owner view
+          Admin
         </p>
         <h1 className="text-4xl font-semibold tracking-tight">
-          Business dashboard
+          {RUNNER_FIRST_NAME}&apos;s dashboard
+          {pending.length > 0 && (
+            <span className="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-white align-middle animate-pulse">
+              {pending.length}
+            </span>
+          )}
         </h1>
         <p className="text-muted-foreground">
           Signed in as {session.user.email}
         </p>
       </header>
 
-      <OwnerDashboard analytics={analytics} roster={roster} />
+      <AdminDashboard
+        analytics={analytics}
+        pending={pending}
+        upcoming={upcoming}
+        past={past}
+        cancellations={cancellations}
+        roster={roster}
+      />
     </div>
   );
 }

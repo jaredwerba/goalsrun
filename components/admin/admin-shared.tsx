@@ -1,13 +1,98 @@
 "use client";
 
-// Types and small UI atoms shared between the operator (Goals) and owner
-// (developer) admin dashboards.
+// Types, the count-up animation hook, and small UI atoms used by the
+// admin dashboard.
 
-import { useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { acceptBooking, adminCancelBooking } from "@/app/admin/actions";
 import { formatSlotRange } from "@/lib/tz";
+
+// ─── Count-up animation ────────────────────────────────────────────────────
+// Interpolates from 0 to `target` over `duration` ms with ease-out cubic.
+// requestAnimationFrame, so it cooperates with browser repaints.
+
+function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+export function useAnimatedNumber(
+  target: number,
+  duration = 1100,
+): number {
+  const [value, setValue] = useState(0);
+  const startedAt = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    startedAt.current = null;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+
+    const tick = (now: number) => {
+      if (startedAt.current === null) startedAt.current = now;
+      const elapsed = now - startedAt.current;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      setValue(target * eased);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        setValue(target);
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, duration]);
+
+  return value;
+}
+
+/** Render an integer with smooth count-up. */
+export function AnimatedInt({ value }: { value: number }) {
+  const v = useAnimatedNumber(value);
+  return <>{Math.round(v).toLocaleString()}</>;
+}
+
+/** Render a USD currency value with smooth count-up. */
+export function AnimatedUsd({ value }: { value: number }) {
+  const v = useAnimatedNumber(value);
+  return (
+    <>
+      {new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      }).format(Math.round(v))}
+    </>
+  );
+}
+
+/** Render a number with a unit suffix (e.g., "120 mi") and count-up. */
+export function AnimatedWithUnit({
+  value,
+  unit,
+}: {
+  value: number;
+  unit: string;
+}) {
+  const v = useAnimatedNumber(value);
+  return (
+    <>
+      {Math.round(v).toLocaleString()}
+      <span className="text-muted-foreground text-xl ml-1">{unit}</span>
+    </>
+  );
+}
+
+/** Render a percentage with count-up. */
+export function AnimatedPercent({ value }: { value: number }) {
+  const v = useAnimatedNumber(value);
+  return <>{Math.round(v)}%</>;
+}
 
 // ─── Shared types ──────────────────────────────────────────────────────────
 

@@ -196,31 +196,14 @@ export const ADMIN_LOGIN_EMAILS = [
   "werba@duck.com",
 ] as const;
 
-/** Goals' email — operator view at /admin. */
-export const ADMIN_OPERATOR_EMAIL = "gersonlopes7@gmail.com";
-
-/** Owner / developer email — business-analytics view at /admin. */
-export const ADMIN_OWNER_EMAIL = "werba@duck.com";
-
-/** True if the given email is allowed to access /admin. Case-insensitive. */
+/** True if the given email is allowed to access /admin. Case-insensitive.
+ *  All emails in ADMIN_LOGIN_EMAILS see the same dashboard. */
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
   const normalized = email.toLowerCase();
   return (ADMIN_LOGIN_EMAILS as readonly string[]).some(
     (a) => a.toLowerCase() === normalized,
   );
-}
-
-/** Which admin variant to render based on signed-in email. */
-export function adminViewFor(
-  email: string | null | undefined,
-): "operator" | "owner" | "none" {
-  if (!email) return "none";
-  const normalized = email.toLowerCase();
-  if (normalized === ADMIN_OWNER_EMAIL.toLowerCase()) return "owner";
-  if (normalized === ADMIN_OPERATOR_EMAIL.toLowerCase()) return "operator";
-  // Other admins (none currently) default to operator view.
-  return isAdminEmail(email) ? "operator" : "none";
 }
 
 /** Placeholder business assumptions used in the owner analytics view.
