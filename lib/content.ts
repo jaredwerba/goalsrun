@@ -188,8 +188,21 @@ export const BOOKING_BLURB =
 /** Email address users can message Goals directly (opens in their mail client). */
 export const GOALS_EMAIL = "gersonlopes7@gmail.com";
 
-/** Email that has admin access to /admin — Goals' personal Gmail. */
-export const ADMIN_LOGIN_EMAIL = "gersonlopes7@gmail.com";
+/** Emails that have admin access to /admin. Goals is the primary
+ *  admin; werba@duck.com is the developer account for testing. */
+export const ADMIN_LOGIN_EMAILS = [
+  "gersonlopes7@gmail.com",
+  "werba@duck.com",
+] as const;
+
+/** True if the given email is allowed to access /admin. Case-insensitive. */
+export function isAdminEmail(email: string | null | undefined): boolean {
+  if (!email) return false;
+  const normalized = email.toLowerCase();
+  return (ADMIN_LOGIN_EMAILS as readonly string[]).some(
+    (a) => a.toLowerCase() === normalized,
+  );
+}
 
 export type SessionType = { name: string; desc: string };
 export const SESSION_TYPES: SessionType[] = [

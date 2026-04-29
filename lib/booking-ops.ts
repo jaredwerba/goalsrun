@@ -54,18 +54,36 @@ export async function acceptBookingById(
   }
 }
 
+/**
+ * Soft-cancel a booking: mark status="cancelled", record who/when, free the slot.
+ * Preserves the row so analytics can report on cancellations.
+ *
+ * @param bookingId - the booking row to cancel
+ * @param cancelledBy - "user" if self-cancel, "admin" if Goals/host cancelled
+ */
 export async function cancelBookingById(
   bookingId: string,
+  cancelledBy: "user" | "admin" = "admin",
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   try {
     await db.transaction(async (tx) => {
       const [b] = await tx
-        .select({ slotId: bookings.slotId })
+        .select({ slotId: bookings.slotId, status: bookings.status })
         .from(bookings)
         .where(eq(bookings.id, bookingId))
         .limit(1);
       if (!b) throw new Error("Booking not found.");
-      await tx.delete(bookings).where(eq(bookings.id, bookingId));
+      if (b.status === "cancelled") return; // idempotent — already cancelled
+
+      await tx
+        .update(bookings)
+        .set({
+          status: "cancelled",
+          cancelledAt: new Date(),
+          cancelledBy,
+        })
+        .where(eq(bookings.id, bookingId));
+
       await tx
         .update(slots)
         .set({ status: "open", bookedByUserId: null })

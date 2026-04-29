@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { and, asc, eq, gt } from "drizzle-orm";
+import { and, asc, eq, gt, ne } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { bookings, slots } from "@/lib/db/schema";
@@ -30,7 +30,11 @@ export default async function BookingsPage() {
     .from(bookings)
     .innerJoin(slots, eq(bookings.slotId, slots.id))
     .where(
-      and(eq(bookings.userId, session.user.id), gt(slots.startsAt, new Date())),
+      and(
+        eq(bookings.userId, session.user.id),
+        gt(slots.startsAt, new Date()),
+        ne(bookings.status, "cancelled"),
+      ),
     )
     .orderBy(asc(slots.startsAt))
     .then((rs) =>

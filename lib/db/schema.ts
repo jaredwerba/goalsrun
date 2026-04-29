@@ -122,9 +122,11 @@ export const slots = pgTable("slots", {
 
 export const bookings = pgTable("bookings", {
   id: uuid("id").primaryKey().defaultRandom(),
+  // No UNIQUE here — a slot can have one active booking + N historical cancelled
+  // bookings. Application layer + slot.status enforces "one active booking per
+  // open slot" via FOR UPDATE in the bookSlot transaction.
   slotId: uuid("slot_id")
     .notNull()
-    .unique()
     .references(() => slots.id, { onDelete: "cascade" }),
   userId: text("user_id")
     .notNull()
@@ -132,14 +134,21 @@ export const bookings = pgTable("bookings", {
   // Location chosen by the user at booking time — independent of slot.location.
   location: text("location").notNull().default("Sullivans at Castle Island"),
   notes: text("notes"),
-  // pending → admin reviews → accepted. Cancels (user or admin) delete the row.
-  status: text("status", { enum: ["pending", "accepted"] })
+  // pending → admin reviews → accepted. Cancels (user or admin) flip to
+  // "cancelled" (preserves history for analytics) and free the slot.
+  status: text("status", { enum: ["pending", "accepted", "cancelled"] })
     .notNull()
     .default("pending"),
+  // Set when status flips to "cancelled". Null otherwise.
+  cancelledAt: timestamp("cancelled_at", { withTimezone: true }),
+  cancelledBy: text("cancelled_by", { enum: ["user", "admin"] }),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
-});
+}, (t) => [
+  index("bookings_status_idx").on(t.status),
+  index("bookings_slotId_idx").on(t.slotId),
+]);
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
