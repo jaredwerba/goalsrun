@@ -103,7 +103,17 @@ export async function cancelBooking(
         .where(and(eq(bookings.id, bookingId), eq(bookings.userId, userId)))
         .limit(1);
       if (!b) throw new Error("Booking not found.");
-      await tx.delete(bookings).where(eq(bookings.id, bookingId));
+      if (b.status === "cancelled") return; // idempotent
+
+      // Soft-cancel: preserve the row for analytics, free the slot.
+      await tx
+        .update(bookings)
+        .set({
+          status: "cancelled",
+          cancelledAt: new Date(),
+          cancelledBy: "user",
+        })
+        .where(eq(bookings.id, bookingId));
       await tx
         .update(slots)
         .set({ status: "open", bookedByUserId: null })

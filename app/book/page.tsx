@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { and, asc, desc, eq, gt, lt } from "drizzle-orm";
+import { and, asc, desc, eq, gt, lt, ne } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { slots, bookings } from "@/lib/db/schema";
@@ -51,7 +51,11 @@ async function getUserBookings(userId: string) {
       })
       .from(bookings)
       .innerJoin(slots, eq(bookings.slotId, slots.id))
-      .where(and(eq(bookings.userId, userId), gt(slots.startsAt, now)))
+      .where(and(
+        eq(bookings.userId, userId),
+        gt(slots.startsAt, now),
+        ne(bookings.status, "cancelled"),
+      ))
       .orderBy(asc(slots.startsAt)),
     db
       .select({
@@ -65,7 +69,11 @@ async function getUserBookings(userId: string) {
       })
       .from(bookings)
       .innerJoin(slots, eq(bookings.slotId, slots.id))
-      .where(and(eq(bookings.userId, userId), lt(slots.startsAt, now)))
+      .where(and(
+        eq(bookings.userId, userId),
+        lt(slots.startsAt, now),
+        ne(bookings.status, "cancelled"),
+      ))
       .orderBy(desc(slots.startsAt))
       .limit(10),
   ]);

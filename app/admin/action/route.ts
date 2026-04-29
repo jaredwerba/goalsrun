@@ -72,8 +72,8 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // action === "cancel"
-  const result = await cancelBookingById(bookingId);
+  // action === "cancel" — Goals clicked the cancel link from his email
+  const result = await cancelBookingById(bookingId, "admin");
   if (!result.ok) {
     return html("Error", "Could not cancel", result.error, "#dc2626");
   }

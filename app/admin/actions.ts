@@ -38,7 +38,7 @@ export async function adminCancelBooking(
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   try {
     await requireAdmin();
-    const result = await cancelBookingById(bookingId);
+    const result = await cancelBookingById(bookingId, "admin");
     if (result.ok) revalidateAll(bookingId);
     return result;
   } catch (err) {

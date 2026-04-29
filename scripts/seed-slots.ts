@@ -30,21 +30,31 @@ function etToUtc(daysFromNow: number, hourET: number, minuteET = 0): Date {
 
 const DAYS_AHEAD = 14;
 
-// 9 AM–1 PM window: 5 × 45-min slots (last ends 12:45 ET)
-// 4 PM–7 PM window: 4 × 45-min slots (last ends 7:00 ET)
-// Same schedule every day — Goals runs mornings and evenings.
+// 5:30 AM through 9 PM window. Back-to-back 45-min slots starting at 5:30,
+// 20 slots per day, last one ends at 8:30 PM (well within the 9 PM ceiling —
+// the next 45-min slot would push past 9 PM, so we stop at 19:45→20:30).
+// Goals can edit this array if he wants fewer/different windows.
 const DAILY_SLOTS: Seed[] = [
-  { startHourET: 9,  startMinET: 0,  lenMin: 45 },
-  { startHourET: 9,  startMinET: 45, lenMin: 45 },
-  { startHourET: 10, startMinET: 30, lenMin: 45 },
-  { startHourET: 11, startMinET: 15, lenMin: 45 },
-  { startHourET: 12, startMinET: 0,  lenMin: 45 },
-  { startHourET: 16, startMinET: 0,  lenMin: 45 },
-  { startHourET: 16, startMinET: 45, lenMin: 45 },
-  { startHourET: 17, startMinET: 30, lenMin: 45 },
-  { startHourET: 18, startMinET: 15, lenMin: 45 },
-  // 6:45 PM → 7:30 PM (end of evening window)
-  { startHourET: 18, startMinET: 45, lenMin: 45 },
+  { startHourET: 5,  startMinET: 30, lenMin: 45 }, // 5:30 → 6:15
+  { startHourET: 6,  startMinET: 15, lenMin: 45 }, // 6:15 → 7:00
+  { startHourET: 7,  startMinET: 0,  lenMin: 45 }, // 7:00 → 7:45
+  { startHourET: 7,  startMinET: 45, lenMin: 45 }, // 7:45 → 8:30
+  { startHourET: 8,  startMinET: 30, lenMin: 45 }, // 8:30 → 9:15
+  { startHourET: 9,  startMinET: 15, lenMin: 45 }, // 9:15 → 10:00
+  { startHourET: 10, startMinET: 0,  lenMin: 45 }, // 10:00 → 10:45
+  { startHourET: 10, startMinET: 45, lenMin: 45 }, // 10:45 → 11:30
+  { startHourET: 11, startMinET: 30, lenMin: 45 }, // 11:30 → 12:15
+  { startHourET: 12, startMinET: 15, lenMin: 45 }, // 12:15 → 13:00
+  { startHourET: 13, startMinET: 0,  lenMin: 45 }, // 13:00 → 13:45
+  { startHourET: 13, startMinET: 45, lenMin: 45 }, // 13:45 → 14:30
+  { startHourET: 14, startMinET: 30, lenMin: 45 }, // 14:30 → 15:15
+  { startHourET: 15, startMinET: 15, lenMin: 45 }, // 15:15 → 16:00
+  { startHourET: 16, startMinET: 0,  lenMin: 45 }, // 16:00 → 16:45
+  { startHourET: 16, startMinET: 45, lenMin: 45 }, // 16:45 → 17:30
+  { startHourET: 17, startMinET: 30, lenMin: 45 }, // 17:30 → 18:15
+  { startHourET: 18, startMinET: 15, lenMin: 45 }, // 18:15 → 19:00
+  { startHourET: 19, startMinET: 0,  lenMin: 45 }, // 19:00 → 19:45
+  { startHourET: 19, startMinET: 45, lenMin: 45 }, // 19:45 → 20:30
 ];
 
 async function main() {
