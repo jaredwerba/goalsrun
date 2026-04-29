@@ -29,7 +29,7 @@ function html(title: string, heading: string, body: string, color: string) {
     <div class="icon">${color === "#16a34a" ? "✓" : color === "#dc2626" ? "✕" : "⚠"}</div>
     <h1 class="accent">${heading}</h1>
     <p>${body}</p>
-    <a href="/admin">Go to dashboard</a>
+    <a href="/book">Go to dashboard</a>
   </div>
 </body>
 </html>`,

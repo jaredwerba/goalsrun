@@ -70,7 +70,7 @@ export async function sendBookingRequestEmails(p: BookingEmailPayload): Promise<
       <a href="${acceptUrl}" style="display:inline-block;padding:10px 20px;background:#16a34a;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;margin-right:12px">Accept run</a>
       <a href="${cancelUrl}" style="display:inline-block;padding:10px 20px;background:#dc2626;color:#fff;text-decoration:none;border-radius:8px;font-weight:600">Cancel request</a>
     </p>
-    <p style="color:#6b7280;font-size:12px;margin-top:16px">Links expire in 72 hours. Or manage at <a href="${siteBase}/admin">goalslopes.run/admin</a>.</p>
+    <p style="color:#6b7280;font-size:12px;margin-top:16px">Links expire in 72 hours. Or manage your dashboard at <a href="${siteBase}/book">goalslopes.run/book</a>.</p>
   `;
 
   const results = await Promise.allSettled([
