@@ -3,12 +3,12 @@
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/lib/auth";
-import { ADMIN_LOGIN_EMAIL } from "@/lib/content";
+import { isAdminEmail } from "@/lib/content";
 import { acceptBookingById, cancelBookingById } from "@/lib/booking-ops";
 
 async function requireAdmin(): Promise<void> {
   const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user || session.user.email !== ADMIN_LOGIN_EMAIL) {
+  if (!session?.user || !isAdminEmail(session.user.email)) {
     throw new Error("Unauthorized.");
   }
 }

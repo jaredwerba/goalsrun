@@ -10,7 +10,7 @@ import type {
   CancellationRow,
   Analytics,
 } from "@/components/admin/admin-dashboard";
-import { ADMIN_LOGIN_EMAIL } from "@/lib/content";
+import { isAdminEmail } from "@/lib/content";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Admin — goalslopes.run" };
@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user || session.user.email !== ADMIN_LOGIN_EMAIL) {
+  if (!session?.user || !isAdminEmail(session.user.email)) {
     redirect("/book");
   }
 
