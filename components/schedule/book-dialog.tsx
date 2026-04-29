@@ -21,6 +21,7 @@ import type { Slot } from "@/lib/db/schema";
 const LOCATIONS = [
   "Sullivans Castle Island",
   "Moakley Park Stadium",
+  "Franklin Park: Front of Golf Clubhouse",
 ] as const;
 
 type Location = (typeof LOCATIONS)[number];
